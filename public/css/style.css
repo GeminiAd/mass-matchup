@@ -1,0 +1,697 @@
+:root {
+    --light: aliceblue;
+    --dark: darkslateblue;
+    --tertiary: slateblue;
+    --sunset-yellow: #ffd319;
+    --sunset-orange: #ff901f;
+    --neon-red: #FF3131;
+    --neon-green: #0FFF50;
+    --neon-blue: #04d9ff;
+    --neon-yellow: #ccff15;
+}
+
+header {
+    height: 150px;
+}
+
+/*background image*/
+body {
+    background-image: url(../images/newestbg.png);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: top;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/*card transparency*/
+.card {
+    background-color: transparent;
+    border: 1px solid #9B00E8;
+    box-shadow: 0 0 20px #9B00E8 !important;
+}
+
+.user-card {
+    box-shadow: 0 0 20px var(--neon-blue) !important;
+    border: 1px solid var(--neon-blue);
+}
+
+.compare-user-card {
+    box-shadow: 0 0 20px var(--neon-red) !important;
+    border: 1px solid var(--neon-red);
+}
+
+.stats-user-card {
+    box-shadow: 0 0 20px var(--neon-yellow) !important;
+    border: 1px solid var(--neon-yellow);
+}
+
+/*Login animation*/ 
+@keyframes flicker {
+    from {
+      text-shadow:
+      0 0 5px #00dcff,0 0 10px #00dcff,
+      0 0 20px #00dcff, 0 0 40px #00dcff;
+    }
+    to {
+      text-shadow:
+      0 0 5px #09889c, 0 0 10px #09889c,
+      0 0 20px #09889c, 0 0 40px #09889c;
+    }
+  }
+  .login { animation: flicker 1s ease-in-out infinite alternate; 
+}
+
+/*login form*/
+.login,
+.login-text { 
+    text-shadow:
+  0 0 5px #0161E8, 0 0 10px #0161E8,
+  0 0 20px #0161E8, 0 0 40px #0161E8;
+    color: white;
+}
+
+.text-primary {
+    font-family: 'Press Start 2P';
+    background: linear-gradient(#0161E8, #ff5bbe);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+/*sign up page*/
+.steam-title{
+    font-family: 'Press Start 2P';
+    text-decoration: none;
+    color: white;
+    /* font-size: smaller; */
+}
+
+.steam-title:hover {
+    color:#F7E745;
+}
+
+.fool {
+    font-family: 'Press Start 2P';
+    color: white;
+    text-shadow:
+    0 0 5px #aa00ff, 0 0 10px #aa00ff;
+}
+/*overflow-y: scroll; */
+/*dashboard styling*/
+
+
+.dash-title {
+    text-shadow:
+    0 0 5px #aa00ff, 0 0 10px #aa00ff,
+    0 0 20px #aa00ff, 0 0 40px #aa00ff;
+      color: rgb(254, 252, 255);
+    font-family: 'Press Start 2P'
+}
+
+.yellow-glow-title {
+    color:#ffffff;
+    text-shadow:
+    0 0 5px var(--neon-yellow), 0 0 10px var(--neon-yellow);
+    font-family: 'Press Start 2P';
+}
+
+.red-glow-title {
+    color:#ffffff;
+    text-shadow:
+    0 0 5px var(--neon-red), 0 0 10px var(--neon-red);
+    font-family: 'Press Start 2P';
+}
+
+.card-text {
+    color:white;
+}
+
+.card-title,
+.news-title,
+.dash-line,
+.user {
+    font-family: 'Press Start 2P';
+}
+
+/*nav bar*/
+.dash-line {
+    font-size: 12px;
+    color: #00dcff;;
+    text-shadow:
+    0 0 20px #aa00ff, 0 0 40px #aa00ff;
+}
+
+.nav-class:hover {
+    color: #F7E745;
+
+}
+
+.nav-class {
+    color: #00dcff;
+    text-decoration: none;
+}
+
+/*game news*/
+a[href^="https"] {
+    --bs-link-color:#aa00ff;
+    text-decoration: none;
+}
+
+a[href^="https"]:hover {
+    text-shadow:
+    0 0 5px #aa00ff, 0 0 10px #aa00ff;
+    --bs-link-hover-color:white;
+}
+
+.neon-yellow-link {
+    --bs-link-color: var(--neon-yellow) !important;
+    text-decoration: none;
+}
+
+.neon-yellow-link:hover {
+    text-shadow:
+    0 0 5px var(--neon-yellow), 0 0 10px var(--neon-yellow) !important;
+    --bs-link-hover-color:white;
+}
+
+.neon-blue-link {
+    --bs-link-color: var(--neon-blue) !important;
+    text-decoration: none;
+}
+
+.neon-blue-link:hover {
+    text-shadow:
+    0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue) !important;
+    --bs-link-hover-color:white;
+}
+
+.neon-blue-link:hover {
+    text-shadow:
+    0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+    --bs-link-hover-color:white;
+}
+
+.neon-red-link {
+    --bs-link-color: var(--neon-red) !important;
+    text-decoration: none;
+}
+
+.neon-red-link:hover {
+    text-shadow:
+    0 0 5px var(--neon-red), 0 0 10px var(--neon-red) !important;
+    --bs-link-hover-color:white;
+}
+
+.user-search-image {
+    height: 100px;
+    width: 100px;
+}
+
+.news-title {
+    text-shadow:
+    0 0 5px #580084, 0 0 10px #580084,
+    0 0 20px #580084, 0 0 40px #580084;
+    color: #ffffff;
+    font-size: 15px;
+    
+}
+
+.card-title {
+    text-shadow:
+    0 0 5px #00dcff, 0 0 10px #00dcff;
+}
+
+/*recently played*/
+
+.hours {
+    color:#F7E745;
+    text-shadow:
+    0 0 5px #ab04ff, 0 0 15px #ab04ff;
+}
+
+.violet-glow-btn {
+    position: relative;
+    color: #ab04ff;
+    background-color: rgba(0,0,0,0);
+    transition: 0.2s;
+    overflow: hidden;
+    border: 1px solid #ab04ff;
+    z-index: 500;
+}
+  
+.violet-glow-btn:hover {
+    background: #ab04ff;
+    color: white;
+    box-shadow: 0 0 5px #ab04ff, 0 0 25px #ab04ff, 0 0 50px #ab04ff, 0 0 200px #ab04ff !important;
+}
+
+.violet-glow-btn:active:focus {
+    position: relative;
+    color: #ab04ff;
+    background-color: rgba(0,0,0,0);
+    transition: 0.2s;
+    overflow: hidden;
+    border: 1px solid #ab04ff;
+    z-index: 500;
+}
+
+.violet-glow-btn:active:hover {
+    background: #ab04ff;
+    border-color: #ab04ff;
+    color: white;
+    box-shadow: 0 0 5px #ab04ff, 0 0 25px #ab04ff, 0 0 50px #ab04ff, 0 0 200px #ab04ff !important;
+}
+
+.violet-glow-btn:active:focus:hover {
+    background: #ab04ff;
+    border-color: #ab04ff;
+    color: white;
+    box-shadow: 0 0 5px #ab04ff, 0 0 25px #ab04ff, 0 0 50px #ab04ff, 0 0 200px #ab04ff !important;
+}
+
+/* .profile-button:focus {
+    background: #04d9ff;
+    border: none;
+    color: black;
+    box-shadow: 0 0 5px #04d9ff, 0 0 25px #04d9ff, 0 0 50px #04d9ff, 0 0 200px #04d9ff !important;
+} */
+
+.profile-button:active:hover {
+    background: #04d9ff;
+    border: none;
+    color: black;
+    box-shadow: 0 0 5px #04d9ff, 0 0 25px #04d9ff, 0 0 50px #04d9ff, 0 0 200px #04d9ff !important;
+}
+
+.profile-button[aria-expanded="false"] {
+    position: relative;
+    color: #04d9ff;
+    background-color: rgba(0,0,0,0);
+    transition: 0.2s;
+    overflow: hidden;
+    border: solid 1px #04d9ff;
+}
+
+.profile-button[aria-expanded="true"] {
+    background: #04d9ff;
+    border: none;
+    color: black;
+    box-shadow: 0 0 5px #04d9ff, 0 0 25px #04d9ff, 0 0 50px #04d9ff, 0 0 200px #04d9ff !important;
+}
+
+/*
+.btn {
+    box-shadow:
+    0 0 5px #ab04ff, 0 0 10px #ab04ff;
+    --bs-btn-hover-bg: rgba(171, 4, 255, .75); 
+}
+
+.red-glow-btn {
+    color: #FF3131;
+    border: 1px solid #FF3131;
+    cursor: pointer;
+    font-weight: bold;
+    filter: drop-shadow(0 0 15px #FF3131) drop-shadow(0 0 50px #FF3131) contrast(2) brightness(2);
+    transition: .5s;
+} */
+
+/* .red-glow-btn:hover {
+    color: black;
+    background-color: #FF3131;
+    filter: drop-shadow(0 0 20px #FF3131) contrast(2) brightness(2);
+} */
+
+.red-glow-btn {
+    position: relative;
+    color: #FF3131;
+    background-color: black;
+    transition: 0.3s;
+    overflow: hidden;
+    border: 1px solid #FF3131;
+}
+  
+.red-glow-btn:hover {
+    background: #FF3131;
+    color: white;
+    box-shadow: 0 0 5px #FF3131, 0 0 25px #FF3131, 0 0 50px #FF3131, 0 0 150px #FF3131;
+    /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
+}
+
+.red-glow-btn:active:hover {
+    background: #FF3131;
+    color: white;
+    box-shadow: 0 0 5px #FF3131, 0 0 25px #FF3131, 0 0 50px #FF3131, 0 0 150px #FF3131;
+    /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
+}
+
+.red-glow-btn:active:focus:hover {
+    background: #FF3131;
+    color: white;
+    box-shadow: 0 0 5px #FF3131, 0 0 25px #FF3131, 0 0 50px #FF3131, 0 0 150px #FF3131;
+    /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
+}
+
+.red-glow-btn:active:focus {
+    position: relative;
+    color: #FF3131;
+    background-color: black;
+    transition: 0.3s;
+    overflow: hidden;
+    border: 1px solid #FF3131;
+}
+
+.green-glow-btn, .green-glow-btn:active:focus {
+    position: relative;
+    color: #0FFF50;
+    background-color: black;
+    transition: 0.3s;
+    overflow: hidden;
+    border: solid 1px #0FFF50;
+}
+  
+.green-glow-btn:hover, .green-glow-btn:active:hover, .green-glow-btn:active:focus:hover {
+    background: #0FFF50;
+    color: #050801;
+    box-shadow: 0 0 5px #0FFF50, 0 0 25px #0FFF50, 0 0 50px #0FFF50, 0 0 200px #0FFF50;
+    /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
+}
+
+.blue-glow-btn {
+    position: relative;
+    color: #04d9ff;
+    background-color: black;
+    transition: 0.3s;
+    overflow: hidden;
+    border: solid 1px #04d9ff;
+}
+  
+.blue-glow-btn:hover {
+    background: #04d9ff;
+    color: #050801;
+    box-shadow: 0 0 5px #04d9ff, 0 0 25px #04d9ff, 0 0 50px #04d9ff, 0 0 200px #04d9ff;
+    /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
+}
+
+.blue-glow-btn:active:hover {
+    background: #04d9ff;
+    color: #050801;
+    box-shadow: 0 0 5px #04d9ff, 0 0 25px #04d9ff, 0 0 50px #04d9ff, 0 0 200px #04d9ff;
+    /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
+}
+
+.blue-glow-btn:active:focus:hover {
+    background: #04d9ff;
+    color: #050801;
+    box-shadow: 0 0 5px #04d9ff, 0 0 25px #04d9ff, 0 0 50px #04d9ff, 0 0 200px #04d9ff;
+    /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
+}
+
+.blue-glow-btn:active:focus {
+    position: relative;
+    color: #04d9ff;
+    background-color: black;
+    transition: 0.3s;
+    overflow: hidden;
+    border: solid 1px #04d9ff;
+}
+
+.transparent-blue-glow-btn {
+    position: relative;
+    color: #04d9ff;
+    background-color: rgba(0,0,0,0);
+    transition: 0.2s;
+    overflow: hidden;
+    border: solid 1px #04d9ff;
+}
+
+.transparent-blue-glow-btn:hover {
+    background: #04d9ff;
+    color: black;
+    box-shadow: 0 0 5px #04d9ff, 0 0 25px #04d9ff, 0 0 50px #04d9ff, 0 0 200px #04d9ff !important;
+    /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
+}
+
+.transparent-blue-glow-btn:active:hover {
+    background: #04d9ff;
+    border: #04d9ff;
+    color: black;
+    box-shadow: 0 0 5px #04d9ff, 0 0 25px #04d9ff, 0 0 50px #04d9ff, 0 0 200px #04d9ff !important;
+    /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
+}
+
+.transparent-blue-glow-btn:active:focus:hover {
+    background: #04d9ff;
+    border: #04d9ff;
+    color: black;
+    box-shadow: 0 0 5px #04d9ff, 0 0 25px #04d9ff, 0 0 50px #04d9ff, 0 0 200px #04d9ff !important;
+    /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
+}
+
+.transparent-blue-glow-btn:active:focus {
+    position: relative;
+    color: #04d9ff;
+    background-color: rgba(0,0,0,0);
+    transition: 0.2s;
+    overflow: hidden;
+    border: solid 1px #04d9ff;
+}
+
+.transparent {
+    background-color: rgba(0,0,0,0);
+}
+
+.transparent-green-glow-btn, .transparent-green-glow-btn:active:focus {
+    position: relative;
+    color: var(--neon-green);
+    background-color: rgba(0,0,0,0);
+    transition: 0.3s;
+    overflow: hidden;
+    border: solid 1px var(--neon-green);
+}
+
+.transparent-green-glow-btn:hover, .transparent-green-glow-btn:active:hover, .transparent-green-glow-btn:active:focus:hover {
+    background: var(--neon-green);
+    color: black;
+    box-shadow: 0 0 5px var(--neon-green), 0 0 25px var(--neon-green), 0 0 50px var(--neon-green), 0 0 200px var(--neon-green) !important;
+    /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
+}
+
+.transparent-red-glow-btn, .transparent-red-glow-btn:active:focus {
+    position: relative;
+    color: var(--neon-red);
+    background-color: rgba(0,0,0,0);
+    transition: 0.3s;
+    overflow: hidden;
+    border: solid 1px var(--neon-red);
+}
+
+.transparent-red-glow-btn:hover, .transparent-red-glow-btn:active:hover, .transparent-red-glow-btn:active:focus:hover {
+    background: var(--neon-red);
+    color: white;
+    box-shadow: 0 0 5px var(--neon-red), 0 0 25px var(--neon-red), 0 0 50px var(--neon-red), 0 0 200px var(--neon-red) !important;
+    /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
+}
+
+.yellow-glow-btn, .yellow-glow-btn:active:focus {
+    position: relative;
+    color: #ccff15;
+    background-color: rgba(0,0,0,0);
+    transition: 0.2s;
+    overflow: hidden;
+    border: solid 1px #ccff15;
+}
+  
+.yellow-glow-btn:hover, .yellow-glow-btn:active:focus:hover {
+    background: #ccff15;
+    color: #050801;
+    box-shadow: 0 0 5px #ccff15, 0 0 25px #ccff15, 0 0 50px #ccff15, 0 0 200px #ccff15 !important;
+    /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
+}
+
+.yellow-glow-dropdown:focus {
+    position: relative;
+    color: #ccff15;
+    background-color: rgba(0,0,0,0);
+    transition: 0.2s;
+    overflow: hidden;
+    border: solid 1px #ccff15;
+}
+
+.yellow-glow-dropdown:active:hover {
+    background: #ccff15;
+    border: #ccff15;
+    color: #050801;
+    box-shadow: 0 0 5px #ccff15, 0 0 25px #ccff15, 0 0 50px #ccff15, 0 0 200px #ccff15 !important;
+}
+  
+.yellow-glow-dropdown[aria-expanded="false"] {
+    position: relative;
+    color: #ccff15;
+    background-color: rgba(0,0,0,0);
+    transition: 0.2s;
+    overflow: hidden;
+    border: solid 1px #ccff15;
+}
+
+.yellow-glow-dropdown[aria-expanded="false"]:hover {
+    background: #ccff15;
+    color: #050801;
+    box-shadow: 0 0 5px #ccff15, 0 0 25px #ccff15, 0 0 50px #ccff15, 0 0 200px #ccff15 !important;
+}
+
+.yellow-glow-dropdown[aria-expanded="true"] {
+    background: #ccff15;
+    border: solid 1px #ccff15;
+    color: black;
+    box-shadow: 0 0 5px #ccff15, 0 0 25px #ccff15, 0 0 50px #ccff15, 0 0 150px #ccff15;
+}
+
+#stat-dropdown {
+    z-index: 2;
+}
+
+#graph-box {
+    height: 400px;
+}
+
+.sidebar-user-image {
+    height: 45px;
+    width: 45px;
+}
+
+#logo-image {
+    height: 184px;
+    width: 184px;
+}
+
+.friend-text {
+    color: black;
+}
+
+/*user section*/
+.user {    
+    color:#ffffff;
+    text-shadow:
+    0 0 5px #00dcff, 0 0 10px #00dcff;
+}
+
+.btn-secondary{
+    --bs-btn-bg: rgba(0, 0, 0, 0.125);
+    --bs-btn-active-bg: rgba(0, 0, 0, 0.125);
+
+    
+}
+
+.blue-dropdown-menu {
+    /*
+    --bs-dropdown-color: rgba(0, 0, 0, 0.125);
+    --bs-dropdown-bg: rgba(171, 4, 255, .75); 
+    --bs-dropdown-link-hover-bg: rgba(171, 4, 255, .75); 
+    */
+    background-color: rgba(0,0,0,.80);
+    color:white;
+}
+
+.blue-dropdown-item {
+    color: #00dcff;
+}
+
+.blue-dropdown-item:hover {
+    background: #00dcff;
+    color: black;
+    box-shadow: 0 0 5px #00dcff, 0 0 25px #00dcff, 0 0 50px #00dcff, 0 0 200px #00dcff !important;
+}
+
+.yellow-dropdown-menu {
+    /*
+    --bs-dropdown-color: rgba(0, 0, 0, 0.125);
+    --bs-dropdown-bg: rgba(171, 4, 255, .75); 
+    --bs-dropdown-link-hover-bg: rgba(171, 4, 255, .75); 
+    */
+    background-color: rgba(0,0,0,.70);
+    color:white;
+}
+
+.yellow-dropdown-item {
+    color: #ccff15;
+}
+
+.yellow-dropdown-item:hover {
+    background: #ccff15;
+    color: black;
+    box-shadow: 0 0 5px #ccff15, 0 0 25px #ccff15, 0 0 50px #ccff15, 0 0 200px #ccff15 !important;
+}
+
+.steam-user-image {
+    height: 184px;
+    width: 184px;
+}
+
+#privacy-settings-image {
+    height: 300px;
+    width: 150px;
+}
+
+#edit-profile-image {
+    height: 100px;
+    width: 220px;
+}
+
+#profile-public-setting-image {
+    height: 40px;
+    width: 200px;
+}
+
+#account-details-image {
+    height: 165px;
+    width: 266px;
+}
+
+.offcanvas-header {
+    font-family: 'Press Start 2P';
+    text-shadow:
+    0 0 5px #580084, 0 0 10px #580084,
+    0 0 20px #580084, 0 0 40px #580084;
+    color: #ffffff;
+    /* background-color: rgba(0,0,0,0); */
+}
+
+.offcanvas {
+    background-color: rgba(0,0,0,.80);
+    /* opacity: .85; */
+}
+
+.friend-text {
+    color: white;
+}
+
+.friend-button {
+    background-color: rgba(0,0,0,.75);
+}
+
+.sidebar-button:hover {
+    background: #ab04ff;
+    color: #050801;
+    box-shadow: 0 0 5px #ab04ff, 0 0 25px #ab04ff, 0 0 50px #ab04ff, 0 0 200px #ab04ff;
+}
+
+.user-stat-list-group-item {
+    color: #ccff15;
+    color:#ffffff;
+    text-shadow:
+    0 0 5px #ccff15, 0 0 10px #ccff15;
+    background-color: rgba(0,0,0,0);
+    border: none;
+}
+
+#navbar {
+    list-style-type: none;
+}
+
+@media (max-width: 992px) {
+    nav {
+        font-size: 26px;
+    }
+}
