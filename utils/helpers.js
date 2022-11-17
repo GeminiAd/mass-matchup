@@ -1,12 +1,3 @@
-
-const withAuth = (req, res, next) => {
-  if (!req.session.LoggedIn) {
-    res.redirect('/login');
-  } else {
-    next();
-  }
-};
-
 function to_hours(min) {
   let hours = min / 60
   return Math.trunc(hours);
@@ -67,7 +58,7 @@ function newsCleanUp(noNews) {
   if(!noNews){
     return noNews
   } else {
-  console.log(noNews)
+  //console.log(noNews)
   if (noNews.indexOf('{') == 0) {
     badNews = noNews.split(/(?<=^\S+)\s/)
     goodNews = badNews.splice(1, 1)
@@ -79,4 +70,4 @@ function newsCleanUp(noNews) {
 
 
 
-module.exports = { to_hours, withAuth, has_friend_requests, has_selected_a_game, whichUser, newsCleanUp };
+module.exports = { to_hours, has_friend_requests, has_selected_a_game, whichUser, newsCleanUp };
