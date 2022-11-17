@@ -2,10 +2,9 @@ const router = require("express").Router();
 const { User } = require("../../models");
 require('dotenv').config();
 const rp = require('request-promise');
-const { checkPassword, getSteamUserData, updateUserData, saveSessionData } = require('../../utils/middleware');
+const { checkPassword, getSteamUserData, updateUserData, saveSessionData, redirectIfSteamProfileIsPrivate, getOwnedSteamGames, updateOwnedSteamGames, getAllOwnedGames } = require('../../utils/middleware');
 
-router.post("/login", checkPassword, getSteamUserData, updateUserData, saveSessionData, async (req, res) => {
-
+router.post("/login", checkPassword, getSteamUserData, updateUserData, saveSessionData, redirectIfSteamProfileIsPrivate, getOwnedSteamGames, updateOwnedSteamGames, getAllOwnedGames, async (req, res) => {
 
         res
           .status(200)
@@ -38,6 +37,7 @@ router.post("/signup", async (req, res) => {
           req.session.steam_username = dbUserData.steam_username;
           req.session.steam_avatar_full = dbUserData.steam_avatar_full;
           req.session.profile_url = dbUserData.profile_url;
+          req.session.steam_id = dbUserData.steam_id;
           
           res.status(200).json(dbUserData);
       });
