@@ -1,10 +1,10 @@
 const router = require("express").Router();
 const { User, Friend, FriendReq } = require("../models");
 require('dotenv').config();
-const request = require('request');
+//const request = require('request');
 var rp = require('request-promise');
 const { parse } = require("handlebars");
-const controller = new AbortController();
+//const controller = new AbortController();
 const { getFriendsAndFriendRequests, authorizeUser, getFriendData, desperateMeasures, redirectIfSteamProfileIsPrivate } = require('../utils/middleware');
 const { newsCleanUp } = require('../utils/helpers')
 
