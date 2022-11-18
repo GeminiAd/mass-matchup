@@ -26,5 +26,4 @@ async function recentGameButtonOnClick(event) {
 
 }
 
-
 $('.recent-game-button').on('click', recentGameButtonOnClick);

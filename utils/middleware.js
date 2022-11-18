@@ -52,34 +52,68 @@ async function desperateMeasures(){
     
 }
 
-/*
- *  Get all games that the user owns from the database and puts it in a session variable.
- */
-async function getAllOwnedGames(req, res, next) {
-    const user = await User.findByPk(req.session.user, {
-        include: [
-            {
-                model: Game,
-                through: {
-                    where: {
-                        playtime_forever: {
-                            [Op.gt]: 0
+/* Fetches and returns owned game data from the Steam Web API. Also parses the data and filters the games based on whether or not they have stats. */
+function fetchAndReturnSteamOwnedGameData(steamID) {
+    return new Promise((resolve, reject) => {
+        const fetchURL = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=' + process.env.APIkey + '&steamid=' + steamID + '&format=json&include_appinfo=true';
+        rp(fetchURL)
+        .then((response) => {
+            const ownedGamesSteamData = JSON.parse(response).response.games;
+    
+            const filteredGameData = ownedGamesSteamData.filter(steamGame => steamGame.has_community_visible_stats);
+    
+            resolve(filteredGameData);
+        })
+        .catch((error) => {
+            reject(error);
+        });
+    });
+}
+
+function getAndSortAllOwnedGamesByUserID(userID) {
+    return new Promise((resolve, reject) => {
+        User.findByPk(userID, {
+            include: [
+                {
+                    model: Game,
+                    through: {
+                        where: {
+                            playtime_forever: {
+                                [Op.gt]: 0
+                            }
                         }
                     }
                 }
-            }
-        ]
+            ]
+        })
+        .then((user) => {
+            const ownedGames = user.games.map(game => game.get({ plain: true }));
+
+            const sortedGames = ownedGames.sort(function (a, b) {
+                return parseFloat(b.user_game.playtime_forever) - parseFloat(a.user_game.playtime_forever);
+            });
+
+            resolve(sortedGames);
+        })
+        .catch((error) => {
+            reject(error);
+        }); 
     });
+}
 
-    const ownedGames = user.games.map(game => game.get({ plain: true }));
+/*
+ *  Get all games that the user owns from the database and puts it in a session variable.
+ */
+async function getAllOwnedGamesForUser(req, res, next) {
+    getAndSortAllOwnedGamesByUserID(req.session.user)
+    .then((games) => {
+        res.locals.ownedGames = games;
 
-    const sortedGames = ownedGames.sort(function (a, b) {
-        return parseFloat(b.user_game.playtime_forever) - parseFloat(a.user_game.playtime_forever);
-    });
-
-    res.locals.ownedGames = sortedGames;
-
-    next();
+        next();
+    })
+    .catch((error) => {
+        console.log(error);
+    })
 }
 
 async function getFriendData(req, res, next) {
@@ -140,14 +174,11 @@ async function getFriendsAndFriendRequests(req, res, next) {
 
 /* Makes a request to the Steam Web API for the user's owned game information and stores it in a local variable for use later. */
 /* Filters out games that don't have community stats visible so I don't have to do it later. */
-function getOwnedSteamGames(req, res, next) {
-    const fetchURL = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=' + process.env.APIkey + '&steamid=' + req.session.steam_id + '&format=json&include_appinfo=true';
-    //console.log(fetchURL);
-    rp(fetchURL)
-    .then((response) => {
-        const ownedGamesSteamData = JSON.parse(response).response.games;
+function getOwnedSteamGamesForUser(req, res, next) {
+    fetchAndReturnSteamOwnedGameData(res.locals.dbUserData.steam_id)
+    .then((games) => {
 
-        res.locals.ownedGamesSteamData = ownedGamesSteamData.filter(steamGame => steamGame.has_community_visible_stats);
+        res.locals.ownedGamesSteamData = games;
 
         next();
     })
@@ -333,7 +364,7 @@ module.exports = {
     getSteamUserData, 
     updateUserData,
     saveSessionData,
-    getOwnedSteamGames,
+    getOwnedSteamGamesForUser,
     updateOwnedSteamGames,
-    getAllOwnedGames
+    getAllOwnedGamesForUser
 };
