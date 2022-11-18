@@ -15,7 +15,8 @@
         <div class="col-12 col-sm-6 col-lg-7 col-xl-8 p-0">
             <div class="card shadow-lg m-2" id="stat-results-display-box">
                 <div class="card-body">
-                    {{#if statResultsPage}}
+                    {{> (whichStatResultDisplay this)}}
+                    {{!-- {{#if statResultsPage}}
                         {{#if (has_stats iAmAwesome)}}
                         <div class="d-flex">
                             <h4 class="card-title dash-title lh-base m-0">Results for {{gameName}}:</h4>
@@ -41,7 +42,7 @@
                         {{/each}}
                     </ul>
                     {{/if}}
-                    {{/if}}
+                    {{/if}} --}}
                 </div>
             </div>
         </div>
