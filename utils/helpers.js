@@ -76,6 +76,20 @@ function newsCleanUp(noNews) {
   return noNews
 }
 
+/*
+ *  Takes in the global context and determines which stat result header to display
+ */
+function whichStatResultDisplay(context) {
+  //console.log(context);
+
+  if (!context.statResultsPage) {
+    return 'no-game-button-clicked';
+  } else if (context.iAmAwesome.length) {
+    return 'stats-for-game';
+  } else {
+    return 'no-stats-for-game';
+  }
+}
 
 
-module.exports = { to_hours, has_friend_requests, has_selected_a_game, whichUser, newsCleanUp, has_stats };
+module.exports = { to_hours, has_friend_requests, has_selected_a_game, whichUser, newsCleanUp, has_stats, whichStatResultDisplay };
