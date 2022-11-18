@@ -169,6 +169,25 @@ router.get('/ownedGameStats/:appid', authorizeUser, getFriendsAndFriendRequests,
     })
     .catch((error) => {
         console.log(error);
+        res.render('user-stats',
+        {
+            goodData: true,
+            iAmAwesome: [],
+            friends: res.locals.friends,
+            friendRequests: res.locals.friendRequests,
+            ownedGames: res.locals.ownedGames,
+            gameName: req.query.name,
+            statsPage: true,
+            statResultsPage: true,
+            user: {
+                loggedIn: req.session.loggedIn,
+                username: req.session.username,
+                steam_username: req.session.steam_username,
+                steam_avatar_full: req.session.steam_avatar_full,
+                profile_url: req.session.profile_url
+            }
+        }
+    )
     });
 });
 

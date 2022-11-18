@@ -61,10 +61,11 @@ User.init(
       },
     },
     sequelize,
-    timestamps: false,
     freezeTableName: true,
     underscored: true,
     modelName: "user",
+    createdAt: "created_at",
+    updatedAt: "updated_at"
   }
 );
 

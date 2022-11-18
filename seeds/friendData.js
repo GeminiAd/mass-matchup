@@ -26,20 +26,20 @@ const friendData = [
         link_id: 3
     },
     {
-        friend_id: 8,
-        link_id: 10
-    },
-    {
-        friend_id: 8,
-        link_id: 9
-    },
-    {
         friend_id: 7,
         link_id: 9
     },
     {
-        friend_id: 8,
-        link_id: 12
+        friend_id: 7,
+        link_id: 8
+    },
+    {
+        friend_id: 6,
+        link_id: 8
+    },
+    {
+        friend_id: 7,
+        link_id: 11
     }
 ]
 

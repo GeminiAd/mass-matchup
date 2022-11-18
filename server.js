@@ -5,7 +5,12 @@ const exphbs = require("express-handlebars");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const request = require('request');
 require('dotenv').config();
+const { updateAllOwnedGamesAndAllUsers } = require('./utils/utils');
 
+const ONE_DAY = 5184000000;
+const ONE_HOUR = 3600000;
+const ONE_MINUTE = 60000;
+const FIVE_MINUTES = 300000;
 
 const routes = require("./controllers");
 const sequelize = require("./config/connection");
@@ -44,6 +49,8 @@ process.env.APIkey
 app.use(routes);
 
 sequelize.sync({ force: false }).then(() => {
+  setInterval(updateAllOwnedGamesAndAllUsers, ONE_MINUTE);
+
   app.listen(PORT, () => console.log("Now listening"));
 });
 

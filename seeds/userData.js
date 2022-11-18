@@ -33,14 +33,6 @@ const UserData = [{
   profile_url: "https://steamcommunity.com/profiles/76561199214467239/",
 },
 {
-  username: "Angel",
-  password: "vengence84",
-  steam_id: '76561198259999820',
-  steam_avatar_full: 'https://avatars.akamai.steamstatic.com/d3f4eba80c8b586c41ff6aaee88f84c6cdc9a710_full.jpg',
-  steam_username: 'fy fan',
-  profile_url: "https://steamcommunity.com/profiles/76561198259999820/",
-},
-{
   username: "Olo",
   password: "killCSTG",
   steam_id: '76561198006651484',

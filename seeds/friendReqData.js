@@ -11,7 +11,7 @@ const friendData1 = [
     },
     {
         friend_id_req: 3,
-        link_id_req: 8, 
+        link_id_req: 7, 
     },
 ]
 
