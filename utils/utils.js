@@ -19,7 +19,7 @@ async function checkToUpdateUserInformation() {
                 const differenceInMinutes = currentTime.diff(updatedAtMoment, 'minutes');
                 console.log(differenceInMinutes);
 
-                return differenceInMinutes > 30;
+                return differenceInMinutes > 1440;
             })
 
             resolve(usersThatNeedUpdating);

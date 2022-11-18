@@ -145,6 +145,18 @@ async function getFriendData(req, res, next) {
     next();
 }
 
+async function getFriendOwnedGames(req, res, next) {
+    getAndSortAllOwnedGamesByUserID(req.params.id)
+    .then((ownedGames) => {
+        res.locals.friendOwnedGames = ownedGames;
+        
+        next();
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+}
+
 async function getFriendsAndFriendRequests(req, res, next) {
     //console.log("TEST");
 
@@ -417,5 +429,6 @@ module.exports = {
     fetchAndReturnSteamOwnedGameData,
     updateOwnedGamesByUserID,
     fetchAndReturnSteamUserData,
-    updateUserDataByUserID
+    updateUserDataByUserID,
+    getFriendOwnedGames
 };
