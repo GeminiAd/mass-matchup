@@ -2,9 +2,9 @@ const router = require("express").Router();
 const { User } = require("../../models");
 require('dotenv').config();
 const rp = require('request-promise');
-const { checkPassword, getSteamUserData, updateUserData, saveSessionData, redirectIfSteamProfileIsPrivate, getOwnedSteamGames, updateOwnedSteamGames, getAllOwnedGames } = require('../../utils/middleware');
+const { checkPassword, getSteamUserData, updateUserData, saveSessionData, redirectIfSteamProfileIsPrivate, getOwnedSteamGamesForUser, updateOwnedSteamGames, getAllOwnedGamesForUser } = require('../../utils/middleware');
 
-router.post("/login", checkPassword, getSteamUserData, updateUserData, saveSessionData, redirectIfSteamProfileIsPrivate, getOwnedSteamGames, updateOwnedSteamGames, async (req, res) => {
+router.post("/login", checkPassword, getSteamUserData, updateUserData, saveSessionData, redirectIfSteamProfileIsPrivate, getOwnedSteamGamesForUser, updateOwnedSteamGames, async (req, res) => {
         res
           .status(200)
           .json({ user: res.locals.dbUserData, message: "You are now logged in!" });
