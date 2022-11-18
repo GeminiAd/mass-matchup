@@ -73,7 +73,11 @@ async function getAllOwnedGames(req, res, next) {
 
     const ownedGames = user.games.map(game => game.get({ plain: true }));
 
-    req.session.ownedGames = ownedGames;
+    const sortedGames = ownedGames.sort(function (a, b) {
+        return parseFloat(b.user_game.playtime_forever) - parseFloat(a.user_game.playtime_forever);
+    });
+
+    res.locals.ownedGames = sortedGames;
 
     next();
 }

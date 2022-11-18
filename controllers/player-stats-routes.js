@@ -4,60 +4,30 @@ require('dotenv').config();
 const request = require('request');
 var rp = require('request-promise');
 const { parse } = require("handlebars");
-const { getFriendsAndFriendRequests, authorizeUser } = require('../utils/middleware');
+const { getFriendsAndFriendRequests, authorizeUser, getAllOwnedGames } = require('../utils/middleware');
 const { json } = require("express");
 let goodData = true;
 let Data;
 
 
-router.get('/', authorizeUser, getFriendsAndFriendRequests, async (req, res) => {
-    if (!req.session.loggedIn) {
-        res.redirect("/login");
-    } else {
-        try {
-            const userData = await User.findByPk(req.session.user, {
-                // where: {
-                //     id: req.params.id
-                // }
-            })
-            const user = userData.get({ plain: true });
-            const steam = user.steam_id
-            var url = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=' + process.env.APIkey + '&steamid=' + steam + '&format=json&include_appinfo=true'
-            rp(url, async function (err, res, body) {
-                if (!err && res.statusCode < 400) {
-                }
-            }).then(function (Data1) {
-                let Data2 = JSON.parse(Data1)
-                //console.log(Data2.response, "POTATOE")
-                if (Data2.response.length == undefined && !Data2.response.games) {
-                    res.redirect("404")
-                }
-                let temp20 = (Data2.response.games)
-                const Data = temp20.sort(function (a, b) {
-                    return parseFloat(b.playtime_forever) - parseFloat(a.playtime_forever);
-                });
+router.get('/', authorizeUser, getFriendsAndFriendRequests, getAllOwnedGames, async (req, res) => {
 
-                res.render('user-stats',
-                    {
-                        friends: res.locals.friends,
-                        friendRequests: res.locals.friendRequests,
-                        Data,
-                        stats: true,
-                        user: {
-                            loggedIn: req.session.loggedIn,
-                            username: req.session.username,
-                            steam_username: req.session.steam_username,
-                            steam_avatar_full: req.session.steam_avatar_full,
-                            profile_url: req.session.profile_url
-                        }
-                    })
-            })
-        } catch (err) {
-            console.log(err)
-            res.status(500).json(err)
+    res.render('user-stats',
+    {
+        friends: res.locals.friends,
+        friendRequests: res.locals.friendRequests,
+        ownedGames: res.locals.ownedGames,
+        statsPage: true,
+        user: {
+            loggedIn: req.session.loggedIn,
+            username: req.session.username,
+            steam_username: req.session.steam_username,
+            steam_avatar_full: req.session.steam_avatar_full,
+            profile_url: req.session.profile_url
         }
-    }
+    })
 });
+
 /////////////////////////////////////////////////////////////////////////
 router.post('/ownedGameStats', async (req, res) => {
     if (!req.session.loggedIn) {
@@ -116,186 +86,90 @@ router.post('/ownedGameStats', async (req, res) => {
     }
 });
 
-router.get('/ownedGameStats', authorizeUser, getFriendsAndFriendRequests, async (req, res) => {
-        try {
-            const userData = await User.findByPk(req.session.user, {
-                // where: {
-                //     id: req.params.id
-                // }
+router.get('/ownedGameStats/:appid', authorizeUser, getFriendsAndFriendRequests, getAllOwnedGames, async (req, res) => {
+    const userData = await User.findByPk(req.session.user)
+    // req.session.appid = req.body.appId
+    // console.log(req.session.appid)
+    const user = await userData.get({ plain: true });
+    const steam = user.steam_id
 
-            })
-            // req.session.appid = req.body.appId
-            // console.log(req.session.appid)
-            const user = await userData.get({ plain: true });
-            const steam = user.steam_id
-
-            // console.log(steam, "steam key")
-            //console.log(req.session.appid, "why are you bug?")
-            var url = 'http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=' + req.session.appid + '&key=' + process.env.APIkey + '&steamid=' + steam
-            //console.log(url);
-            rp(url, async function (err, res, body) {
-                if (!err && res.statusCode < 400) {
-                    
-                }
-            }).then(async function (data1) {
+    // console.log(steam, "steam key")
+    //console.log(req.session.appid, "why are you bug?")
+    var url = 'http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=' + req.params.appid + '&key=' + process.env.APIkey + '&steamid=' + steam
+    //console.log(url);
+    rp(url).then(async function (data1) {
                 
-                let elparso = JSON.parse(data1)
-                let stats = [];
+        let elparso = JSON.parse(data1)
+        let stats = [];
 
-                //console.log(elparso);
+        if (elparso.playerstats) {
+            if (elparso.playerstats.achievements) {
+                let rawAchievements = elparso.playerstats.achievements;
+                let achievements = rawAchievements.map((achievement) => {
+                    const newAchievement = { };
+                    newAchievement.name = achievement.name;
+                    newAchievement.score = achievement.achieved;
 
-                if (elparso.playerstats) {
-                    if (elparso.playerstats.achievements) {
-                        let rawAchievements = elparso.playerstats.achievements;
-                        let achievements = rawAchievements.map((achievement) => {
-                            const newAchievement = { };
-                            newAchievement.name = achievement.name;
-                            newAchievement.score = achievement.achieved;
+                    return newAchievement;
+                });
 
-                            return newAchievement;
-                        });
+                stats = [...achievements];
+            }
 
-                        stats = [...achievements];
-                    }
-                    if (elparso.playerstats.stats) {
-                        let rawStats = elparso.playerstats.stats;
-                        const newStats = rawStats.map((rawStat) => {
-                            const newStat = {};
-                            newStat.name = rawStat.name;
-                            newStat.score = rawStat.value;
+            if (elparso.playerstats.stats) {
+                let rawStats = elparso.playerstats.stats;
+                const newStats = rawStats.map((rawStat) => {
+                    const newStat = {};
+                    newStat.name = rawStat.name;
+                    newStat.score = rawStat.value;
 
-                            return newStat;
-                        });
+                    return newStat;
+                });
 
-                        stats = [...stats, ...newStats]
-                    }
+            stats = [...stats, ...newStats];
+            }
+        }   
 
-                    //console.log(stats);
-                }
+        let temp1 = Object.keys(elparso)
+        let no = "elparso." + temp1[0]
+        let temp2 = eval(no)
+        let temp3 = Object.keys(temp2)
+        let no2 = 'temp2.' + temp3[2]
+        let temp4 = eval(no2)
+        let iAmAwesome = []
 
-                let temp1 = Object.keys(elparso)
-                let no = "elparso." + temp1[0]
-                let temp2 = eval(no)
-                let temp3 = Object.keys(temp2)
-                let no2 = 'temp2.' + temp3[2]
-                let temp4 = eval(no2)
-                let iAmAwesome = []
-
-                /*
-                if (temp4) {
-                    goodData = true
-                    for (i = 0; i < temp4.length; i++) {
-                        let noYeah = Object.values(temp4[i])
-                        let temp69 = {
-                            name: noYeah[0],
-                            score: Math.trunc(noYeah[1])
-                        }
-                        iAmAwesome.push(temp69)
-                    }
-                } else {
-                    goodData = false
-                    
-                } */
-
-                if (stats) {
-                    goodData = true;
-                    iAmAwesome = stats;
-                } else {
-                    goodData = false;
-                }
-
-                // console.log(iAmAwesome)
-                const userData = await User.findByPk(req.session.user, {
-
-                    // where: {
-                    //     id: req.params.id
-                    // }
-                })
-                const user = userData.get({ plain: true });
-                const steam = user.steam_id
-                // console.log(steam, "is work?")
-                // console.log(userData, "i Am the data")
-
-                var url = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=' + process.env.APIkey + '&steamid=' + steam + '&format=json&include_appinfo=true'
-                //console.log(url);
-                rp(url, async function (err, res, body) {
-                    if (!err && res.statusCode < 400) {
-                    }
-                }).then(function (Data1) {
-                    let Data2 = JSON.parse(Data1)
-                    let temp20 = (Data2.response.games)
-                    let Data;
-                    if (temp20) {
-                    Data = temp20.sort(function (a, b) {
-                        return parseFloat(b.playtime_forever) - parseFloat(a.playtime_forever);
-                    });
-                    }
-                    // console.log(Data, "i am the best")
-                    //console.log(elparso);
-
-                    res.render('user-stats',
-                        {
-                            goodData,
-                            iAmAwesome,
-                            friends: res.locals.friends,
-                            friendRequests: res.locals.friendRequests,
-                            Data,
-                            gameName: elparso.playerstats.gameName,
-                            stats: true,
-                            statResults: true,
-                            user: {
-                                loggedIn: req.session.loggedIn,
-                                username: req.session.username,
-                                steam_username: req.session.steam_username,
-                                steam_avatar_full: req.session.steam_avatar_full,
-                                profile_url: req.session.profile_url
-                            }
-                        })
-                })
-            })
-            .catch((error) => {
-                var url = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=' + process.env.APIkey + '&steamid=' + steam + '&format=json&include_appinfo=true';
-                rp(url, async function (err, res, body) {
-                    if (!err && res.statusCode < 400) {
-                    }
-                }).then(function (Data1) {
-                    let Data2 = JSON.parse(Data1)
-                    let temp20 = (Data2.response.games)
-                    let Data;
-                    if (temp20) {
-                    Data = temp20.sort(function (a, b) {
-                        return parseFloat(b.playtime_forever) - parseFloat(a.playtime_forever);
-                    });
-                    }
-                    // console.log(Data, "i am the best")
-                    //console.log(elparso);
-
-                    res.render('user-stats',
-                        {
-                            goodData: false,
-                            iAmAwesome: [],
-                            friends: res.locals.friends,
-                            friendRequests: res.locals.friendRequests,
-                            Data,
-                            gameName: '',
-                            stats: true,
-                            statResults: true,
-                            user: {
-                                loggedIn: req.session.loggedIn,
-                                username: req.session.username,
-                                steam_username: req.session.steam_username,
-                                steam_avatar_full: req.session.steam_avatar_full,
-                                profile_url: req.session.profile_url
-                            }
-                        })
-                })
-            });
-
-
-        } catch (err) {
-            console.log(err, "yes of course")
-            res.status(500).json(err)
+        if (stats) {
+            goodData = true;
+            iAmAwesome = stats;
+        } else {
+            goodData = false;
         }
+
+        const gameName = req.query.name;
+
+        res.render('user-stats',
+            {
+                goodData,
+                iAmAwesome,
+                friends: res.locals.friends,
+                friendRequests: res.locals.friendRequests,
+                ownedGames: res.locals.ownedGames,
+                gameName: gameName,
+                statsPage: true,
+                statResultsPage: true,
+                user: {
+                    loggedIn: req.session.loggedIn,
+                    username: req.session.username,
+                    steam_username: req.session.steam_username,
+                    steam_avatar_full: req.session.steam_avatar_full,
+                    profile_url: req.session.profile_url
+                }
+            }
+        )
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 });
 
 
