@@ -61,9 +61,11 @@ function ownedGameButtonOnClick(event) {
 
     /* 3. Get the friend ID of the friend whose stats we are viewing. */
     const friendID = parseInt(document.location.pathname.match(/\d+/g));
+
+    const gameName = button.querySelector("div > p").innerHTML;
     
     /* 4. Redirect the user to the stats page. */
-    document.location.replace(`/friends/${friendID}/stats/${appid}`);
+    document.location.replace(`/friends/${friendID}/stats/${appid}?name=${gameName}`);
 }
 
 $('.ownedGameBtn').on('click', ownedGameButtonOnClick);

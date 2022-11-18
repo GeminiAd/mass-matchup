@@ -49,7 +49,7 @@ process.env.APIkey
 app.use(routes);
 
 sequelize.sync({ force: false }).then(() => {
-  setInterval(updateAllOwnedGamesAndAllUsers, ONE_MINUTE);
+  setInterval(updateAllOwnedGamesAndAllUsers, ONE_HOUR);
 
   app.listen(PORT, () => console.log("Now listening"));
 });

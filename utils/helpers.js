@@ -84,7 +84,7 @@ function whichStatResultDisplay(context) {
 
   if (!context.statResultsPage) {
     return 'no-game-button-clicked';
-  } else if (context.iAmAwesome.length) {
+  } else if (context.stats.length) {
     return 'stats-for-game';
   } else {
     return 'no-stats-for-game';
