@@ -23,6 +23,14 @@ function has_selected_a_game(statisticsList) {
   }
 }
 
+function has_stats(statsList) {
+  if (statsList.length) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 /* 
  *  Takes in the global context from which this function was called (i.e. the context with the friend and friend request information),
  *  and returns a partial to render based on whether or not the current user has sent a friend request or you have sent a friend request to
@@ -70,4 +78,4 @@ function newsCleanUp(noNews) {
 
 
 
-module.exports = { to_hours, has_friend_requests, has_selected_a_game, whichUser, newsCleanUp };
+module.exports = { to_hours, has_friend_requests, has_selected_a_game, whichUser, newsCleanUp, has_stats };

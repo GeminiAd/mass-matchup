@@ -4,8 +4,7 @@ require('dotenv').config();
 const rp = require('request-promise');
 const { checkPassword, getSteamUserData, updateUserData, saveSessionData, redirectIfSteamProfileIsPrivate, getOwnedSteamGames, updateOwnedSteamGames, getAllOwnedGames } = require('../../utils/middleware');
 
-router.post("/login", checkPassword, getSteamUserData, updateUserData, saveSessionData, redirectIfSteamProfileIsPrivate, getOwnedSteamGames, updateOwnedSteamGames, getAllOwnedGames, async (req, res) => {
-
+router.post("/login", checkPassword, getSteamUserData, updateUserData, saveSessionData, redirectIfSteamProfileIsPrivate, getOwnedSteamGames, updateOwnedSteamGames, async (req, res) => {
         res
           .status(200)
           .json({ user: res.locals.dbUserData, message: "You are now logged in!" });
