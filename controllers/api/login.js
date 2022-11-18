@@ -2,9 +2,9 @@ const router = require("express").Router();
 const { User } = require("../../models");
 require('dotenv').config();
 const rp = require('request-promise');
-const { checkPassword, getSteamUserData, updateUserData, saveSessionData, redirectIfSteamProfileIsPrivate, getOwnedSteamGamesForUser, updateOwnedSteamGames, getAllOwnedGamesForUser } = require('../../utils/middleware');
+const { checkPassword, getSteamUserData, updateUserData, saveSessionData, redirectIfSteamProfileIsPrivate, getOwnedSteamGamesForUser, updateOwnedSteamGamesForUser, getAllOwnedGamesForUser } = require('../../utils/middleware');
 
-router.post("/login", checkPassword, getSteamUserData, updateUserData, saveSessionData, redirectIfSteamProfileIsPrivate, getOwnedSteamGamesForUser, updateOwnedSteamGames, async (req, res) => {
+router.post("/login", checkPassword, getSteamUserData, updateUserData, saveSessionData, redirectIfSteamProfileIsPrivate, getOwnedSteamGamesForUser, updateOwnedSteamGamesForUser, async (req, res) => {
         res
           .status(200)
           .json({ user: res.locals.dbUserData, message: "You are now logged in!" });
@@ -31,7 +31,7 @@ router.post("/signup", async (req, res) => {
         req.session.save(() => {
           req.session.loggedIn = true;
           req.session.privateProfile = response.players[0].communityvisibilitystate;
-          console.log(req.session.privateProfile, "HERE2")
+          //console.log(req.session.privateProfile, "HERE2")
           req.session.username = dbUserData.username;
           req.session.steam_username = dbUserData.steam_username;
           req.session.steam_avatar_full = dbUserData.steam_avatar_full;
