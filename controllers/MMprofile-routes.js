@@ -5,7 +5,16 @@ require('dotenv').config();
 var rp = require('request-promise');
 const { parse } = require("handlebars");
 //const controller = new AbortController();
-const { getFriendsAndFriendRequests, authorizeUser, getFriendData, desperateMeasures, redirectIfSteamProfileIsPrivate, getFriendOwnedGames } = require('../utils/middleware');
+const { 
+    getFriendsAndFriendRequests, 
+    authorizeUser, getFriendData, 
+    desperateMeasures, 
+    redirectIfSteamProfileIsPrivate, 
+    getFriendOwnedGames, 
+    updateFriendDataIfNecessary, 
+    updateFriendOwnedGamesIfNecessary,
+} = require('../utils/middleware');
+
 const { newsCleanUp } = require('../utils/helpers')
 
 let ownedGamesData;
@@ -193,7 +202,7 @@ router.get('/search', authorizeUser, getFriendsAndFriendRequests, async (req, re
 })
 
 /* Route to go to a friend's see stats page. */
-router.get('/friends/:id/stats', authorizeUser, getFriendsAndFriendRequests, getFriendData, getFriendOwnedGames, async (req, res) => {   
+router.get('/friends/:id/stats', authorizeUser, getFriendsAndFriendRequests, getFriendData, updateFriendDataIfNecessary, updateFriendOwnedGamesIfNecessary, getFriendOwnedGames, async (req, res) => {   
 
     res.render('friend-stats', {
         friends: res.locals.friends,
@@ -211,7 +220,7 @@ router.get('/friends/:id/stats', authorizeUser, getFriendsAndFriendRequests, get
 });
 
 /* Route to see the stats on the friend's stats page after clicking on a button. */
-router.get('/friends/:id/stats/:appid', authorizeUser, getFriendsAndFriendRequests, getFriendData, getFriendOwnedGames, async (req, res) => {
+router.get('/friends/:id/stats/:appid', authorizeUser, getFriendsAndFriendRequests, getFriendData, updateFriendDataIfNecessary, updateFriendOwnedGamesIfNecessary, getFriendOwnedGames, async (req, res) => {
 
     const gameStatsAPIURL = `http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=${req.params.appid}&key=${process.env.APIkey}&steamid=${res.locals.friendData.steam_id}`; 
     //console.log(gameStatsAPIURL);
@@ -230,7 +239,7 @@ router.get('/friends/:id/stats/:appid', authorizeUser, getFriendsAndFriendReques
             if (gameStatsData.playerstats.achievements) {
                 achievementMap = gameStatsData.playerstats.achievements.map(achievement => {
                     const newAchievement = achievement;
-                    newAchievement.value = achievement.achieved;
+                    newAchievement.score = achievement.achieved;
 
                     return newAchievement;
                 });
@@ -243,7 +252,13 @@ router.get('/friends/:id/stats/:appid', authorizeUser, getFriendsAndFriendReques
             if (!gameStatsData.playerstats.stats) {
                 rawGameStats = [];
             } else {
-                rawGameStats = gameStatsData.playerstats.stats;
+                rawGameStats = gameStatsData.playerstats.stats.map(stat => {
+                    const newStat = {};
+                    newStat.name = stat.name;
+                    newStat.score = stat.value
+
+                    return newStat;
+                });
             }
 
             stats = [...rawGameStats, ...achievementMap];
