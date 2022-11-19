@@ -24,7 +24,7 @@ const signUpUser = async (event) => {
         passwordInputForm.reset();
         verifyPasswordInputForm.reset();
 
-        const response = await fetch('/api/signup', {
+        const response = await fetch('/api/users/signup', {
           method: 'POST',
           body: JSON.stringify({ username, password, steam_id }),
           headers: { 'Content-Type': 'application/json' },
@@ -32,8 +32,9 @@ const signUpUser = async (event) => {
   
         if (response.ok) {
           location.replace('/');
+        } else if (response.status === 400) {
+          alert('Invalid Steam ID');
         } else {
-  
           alert('Failed to sign-up');
         }
       }
