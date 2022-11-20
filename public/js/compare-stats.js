@@ -15,25 +15,31 @@ const doubleStats = async (event) => {
          button = clickedElement;
      }
 
-     const appId = button.getAttribute("sharedGameAppId");
+     const appID = button.getAttribute("sharedGameAppId");
 
-     console.log(appId);
-     if (!appId) {
-         alert("please try again")
-     } else {
-         const response = await fetch(`/compare/sharedGames/${appId}`, {
-             method: 'GET',
-             headers: { 'Content-Type': 'application/json' },
-         });
-         console.log(response)
-         if (response.ok) {
-            console.log("response OK")
-              window.location.replace(`/compare/sharedGames/${appId}`)
-         } else {
-            window.location.replace('/')
-             alert("Someones account is either private or under maintenance!!");
-         }
-     }
+     const friendID = parseInt(document.querySelector('.compare-user-card').getAttribute('friend-id'));
+
+     const gameName = button.querySelector("div > p").innerHTML;
+
+     document.location.replace(`/compare/${friendID}/stats/${appID}?name=${gameName}`);
+
+    //  console.log(appId);
+    //  if (!appId) {
+    //      alert("please try again")
+    //  } else {
+    //      const response = await fetch(`/compare/sharedGames/${appId}`, {
+    //          method: 'GET',
+    //          headers: { 'Content-Type': 'application/json' },
+    //      });
+    //      console.log(response)
+    //      if (response.ok) {
+    //         console.log("response OK")
+    //           window.location.replace(`/compare/sharedGames/${appId}`)
+    //      } else {
+    //         window.location.replace('/')
+    //          alert("Someones account is either private or under maintenance!!");
+    //      }
+    //  }
  };
 
  if (ctx !== null) {

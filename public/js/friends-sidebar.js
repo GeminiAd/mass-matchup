@@ -181,29 +181,7 @@ const compareStats = async (event) => {
     const friend = parseInt(onceMoreWithFeeling) 
     ///This must be flipped twice in the case that the target user-id is greater than 1 integer. Otherwise we get a crash.
 //    console.log(friend, "line 185 extracted value");
-   if (!friend) {
-       alert("please try again")
-   } else {
-    const response = await fetch('/compare', {
-        method: 'POST',
-        body: JSON.stringify({ friend }),
-        headers: { 'Content-Type': 'application/json' },
-    });
-    console.log(response)
-    if (response.ok) {
-        const response = await fetch('/compare/sharedGames', {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-        });
-        if (response.ok) {
-            window.location.replace('/compare/sharedGames')
-            // alert("am i the working?")
-        }
-    } else {
-
-        alert('Search failed! Twy again UwU');
-    }
-   }
+    document.location.replace(`/compare/${friend}`);
 };
 
 

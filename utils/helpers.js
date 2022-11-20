@@ -91,5 +91,17 @@ function whichStatResultDisplay(context) {
   }
 }
 
+function whichCompareStatDisplay() {
+  //console.log(this);
 
-module.exports = { to_hours, has_friend_requests, has_selected_a_game, whichUser, newsCleanUp, has_stats, whichStatResultDisplay };
+  if (!this.compareStatsDisplay) {
+    return 'no-game-button-clicked';
+  } else if (this.finalStats.length) {
+    return 'compare-stats-results';
+  } else {
+    return 'no-compare-stats-results';
+  }
+}
+
+
+module.exports = { to_hours, has_friend_requests, has_selected_a_game, whichUser, newsCleanUp, has_stats, whichStatResultDisplay, whichCompareStatDisplay };

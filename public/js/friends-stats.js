@@ -12,29 +12,7 @@ async function compareStatsButtonOnClick(event) {
     const friendID = parseInt(clickedButton.getAttribute('data-friend-id'));
 
     /* 2. Redirect to the compare stats page. */
-    if (!friendID) {
-        alert("please try again")
-    } else {
-        const response = await fetch('/compare', {
-            method: 'POST',
-            body: JSON.stringify({ friend: friendID }),
-            headers: { 'Content-Type': 'application/json' },
-        });
-        console.log(response)
-        if (response.ok) {
-            const response = await fetch('/compare/sharedGames', {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-            });
-            if (response.ok) {
-                window.location.replace('/compare/sharedGames')
-                // alert("am i the working?")
-            }
-        } else {
- 
-            alert('Search failed! Twy again UwU');
-        }
-    }
+    document.location.replace(`/compare/${friendID}`);
 }
 
 /*

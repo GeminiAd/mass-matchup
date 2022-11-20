@@ -147,6 +147,26 @@ async function getFriendsAndFriendRequests(req, res, next) {
     next();
 }
 
+function getSharedGames(req, res, next) {
+    //console.log(res.locals.friendOwnedGames.length);
+    //console.log(res.locals.ownedGames.length);
+    const friendsOwnedGameAppIDs = res.locals.friendOwnedGames.map((game) => {
+        return game.app_id
+    });
+
+    //console.log(friendsOwnedGameAppIDs);
+
+    const sharedGames = res.locals.ownedGames.filter((game) => {
+        return friendsOwnedGameAppIDs.includes(game.app_id);
+    });
+
+    //console.log(sharedGames);
+
+    res.locals.sharedGames = sharedGames;
+
+    next();
+}
+
 /* Makes a request to the Steam Web API for the user's owned game information and stores it in a local variable for use later. */
 /* Filters out games that don't have community stats visible so I don't have to do it later. */
 function getOwnedSteamGamesForUser(req, res, next) {
@@ -277,5 +297,6 @@ module.exports = {
     updateUserDataByUserID,
     getFriendOwnedGames,
     updateFriendDataIfNecessary,
-    updateFriendOwnedGamesIfNecessary
+    updateFriendOwnedGamesIfNecessary,
+    getSharedGames
 };
