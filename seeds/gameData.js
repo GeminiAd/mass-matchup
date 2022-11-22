@@ -2,6 +2,11 @@ const { Game } = require('../models');
 
 const gameData = [
     {
+        app_id: 1361210,
+        name: "Warhammer 40,000: Darktide",
+        img_icon_url: "d5393efe3861d02745efd35bc406f7740c8d6838"
+    },
+    {
         app_id: 730,
         name: "Counter-Strike: Global Offensive",
         img_icon_url: "69f7ebe2735c366c65c0b33dae00e12dc40edbe4"

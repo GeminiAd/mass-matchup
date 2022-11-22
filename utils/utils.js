@@ -2,7 +2,7 @@ var moment = require('moment'); // require
 moment().format();
 const rp = require('request-promise');
 
-const { User, Game, UserGame } = require("../models");
+const { User, Game, UserGame, News } = require("../models");
 const { Op } = require("sequelize");
 
 /* Checks to see if any user and owned game information needs updating, and if so, returns a list of users that need updating. */
@@ -32,7 +32,25 @@ async function checkToUpdateUserInformation() {
     });
 }
 
+function fetchAndReturnSteamGameNews(appID) {
+    return new Promise((resolve, reject) => {
+        const fetchURL = `http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=${appID}&count=10&maxlength=300&format=json`;
+        //console.log(fetchURL);
+        rp(fetchURL)
+        .then((response) => {
+            const rawGameNews = JSON.parse(response).appnews.newsitems;
+
+            resolve(rawGameNews);
+        })
+        .catch((error) => {
+            //console.log(error);
+            reject(error);
+        });
+    });
+}
+
 /* Fetches and returns owned game data from the Steam Web API. Also parses the data and filters the games based on whether or not they have stats. */
+/* Also filters out any steam data with playtime forever equal to zero as that is an indication that the user's playtime information is private and not indicative of their playtime, so we don't want to update that in the database. */
 function fetchAndReturnSteamOwnedGameData(steamID) {
     return new Promise((resolve, reject) => {
         const fetchURL = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=' + process.env.APIkey + '&steamid=' + steamID + '&format=json&include_appinfo=true';
@@ -66,6 +84,15 @@ function fetchAndReturnSteamUserData(steamID) {
             console.log(error);
             reject(error);
         });
+    });
+}
+
+function fetchAndUpdateSteamGameNews(game) {
+    return new Promise(async (resolve, reject) => {
+        const gameNews = await fetchAndReturnSteamGameNews(game.app_id);
+        const rowsUpdated = await updateSteamGameNews(gameNews, game);
+
+        resolve(gameNews);
     });
 }
 
@@ -210,6 +237,13 @@ function updateOwnedGamesByUserID(userID, userOwnedGamesSteamData) {
 
                 newUserGameObj.user_id = userID;
                 newUserGameObj.game_id = gameData.id;
+                /* If the steam user has no playtime in the last 2 weeks, there won't be a playtime_2weeks key in the STEAM response. */
+                if (game.playtime_2weeks) {
+                    newUserGameObj.playtime_2weeks = game.playtime_2weeks;
+                    console.log(`YOU HAVE PLAYED ${game.name} FOR ${game.playtime_2weeks} MINUTES IN THE PAST 2 WEEKS`);
+                } else {
+                    newUserGameObj.playtime_2weeks = 0;
+                }
                 newUserGameObj.playtime_forever = game.playtime_forever;
                 newUserGameObj.playtime_windows_forever = game.playtime_windows_forever;
                 newUserGameObj.playtime_mac_forever = game.playtime_mac_forever;
@@ -221,7 +255,22 @@ function updateOwnedGamesByUserID(userID, userOwnedGamesSteamData) {
             await UserGame.bulkCreate(userGameObjsToAdd);
 
             /* 8. Get a list of UserGame relationships to update. */
-            const ownedDBGamesToUpdate = userOwnedGamesSteamData.filter((steamGame) => ownedDBGameAppIDs.includes(steamGame.appid));
+            /* I'm filtering out games that have no playtime as any steam user can hide their playtime information, and in that event I don't want to overwrite their accurate playtime information with a bunch of games that have 0 playtime. */
+            const ownedSteamGamesToUpdate = userOwnedGamesSteamData.filter((steamGame) => (ownedDBGameAppIDs.includes(steamGame.appid)  && steamGame.playtime_forever));
+
+            /* 
+             *  Steam game information doesn't come with the playtime_2weeks key if the user hasn't played in the last two weeks,
+             *  so I need to set that to 0 if that's the case before adding it to the database. 
+             */
+            const ownedDBGamesToUpdate = ownedSteamGamesToUpdate.map((game) => {
+                if (!game.playtime_2weeks) {
+                    game.playtime_2weeks = 0;
+                } else {
+                    console.log(`YOU HAVE PLAYED ${game.name} FOR ${game.playtime_2weeks} MINUTES IN THE PAST 2 WEEKS`);
+                }
+
+                return game;
+            });
             
             /* 9. Update all UserGame relationships in the database. */
             let numRowsUpdated = 0;
@@ -234,6 +283,7 @@ function updateOwnedGamesByUserID(userID, userOwnedGamesSteamData) {
 
                 const [rows, poop] = await UserGame.update(
                     {
+                        playtime_2weeks: game.playtime_2weeks,
                         playtime_forever: game.playtime_forever,
                         playtime_windows_forever: game.playtime_windows_forever,
                         playtime_mac_forever: game.playtime_mac_forever,
@@ -259,6 +309,42 @@ function updateOwnedGamesByUserID(userID, userOwnedGamesSteamData) {
             console.log(error);
             reject(error);
         });
+    });
+}
+
+function updateSteamGameNews(newsItems, game) {
+    return new Promise(async (resolve, reject) => {
+        const newsIDs = game.news.map(newsItem => newsItem.gid);
+
+        const rawNewsItemsToAdd = newsItems.filter(newsItem => !newsIDs.includes(newsItem.gid));
+        //console.log(rawNewsItemsToAdd);
+
+        const newsItemsToAdd = rawNewsItemsToAdd.map(rawNewsItem => {
+            const newsItem = {};
+            newsItem.game_id = game.id;
+            newsItem.gid = rawNewsItem.gid;
+            newsItem.title = rawNewsItem.title;
+            newsItem.url = rawNewsItem.url;
+            newsItem.author = rawNewsItem.author;
+            newsItem.contents = rawNewsItem.contents;
+            newsItem.date = rawNewsItem.date;
+
+            return newsItem;
+        });
+
+        const newsItemsCreated = await News.bulkCreate(newsItemsToAdd)
+        const rowsUpdated = await Game.update(
+            { 
+                news_updated_at: new Date()
+            },
+            {
+                where: {
+                    id: game.id
+                }
+            }
+        );
+
+        resolve(newsItemsCreated);
     });
 }
 
@@ -308,5 +394,6 @@ module.exports = {
     updateUserDataByUserID,
     getAndSortAllOwnedGamesByUserID,
     fetchAndUpdateOwnedGames,
-    updateOwnedGamesUpdatedAt
+    updateOwnedGamesUpdatedAt,
+    fetchAndUpdateSteamGameNews
 };

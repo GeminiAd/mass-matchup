@@ -4,6 +4,7 @@ const seedFriends = require("./friendData");
 const seedFriendsReq = require("./friendReqData");
 const seedGames = require("./gameData");
 const seedUserGames = require("./userGameData");
+const seedGameNews = require("./gameNewsData");
 
 const seedAll = async () => {
     await sequelize.sync({ force: true });
@@ -12,6 +13,7 @@ const seedAll = async () => {
     await seedFriendsReq();
     await seedGames();
     await seedUserGames();
+    await seedGameNews();
 
     process.exit(0);
   };

@@ -4,6 +4,7 @@ const userGameData = [
     {
         user_id: 3,
         game_id: 1,
+        playtime_2weeks: 0,
         playtime_forever: 0,
         playtime_windows_forever: 0,
         playtime_mac_forever: 0,
@@ -13,6 +14,7 @@ const userGameData = [
     {
         user_id: 3,
         game_id: 5,
+        playtime_2weeks: 0,
         playtime_forever: 47907,
         playtime_windows_forever: 47907,
         playtime_mac_forever: 0,
@@ -22,6 +24,7 @@ const userGameData = [
     {
         user_id: 3,
         game_id: 2,
+        playtime_2weeks: 0,
         playtime_forever: 695,
         playtime_windows_forever: 47907,
         playtime_mac_forever: 0,
@@ -31,6 +34,7 @@ const userGameData = [
     {
         user_id: 3,
         game_id: 6,
+        playtime_2weeks: 0,
         playtime_forever: 48324,
         playtime_windows_forever: 49,
         playtime_mac_forever: 0,
