@@ -3,6 +3,7 @@ const Friend = require("./Friend");
 const FriendReq = require("./FriendReq");
 const Game = require('./Game');
 const UserGame = require('./UserGame');
+const News = require('./News');
 
 User.belongsToMany(User, {
     through: Friend,
@@ -38,4 +39,12 @@ User.belongsToMany(Game, {
     foreignKey: "user_id"
 });
 
-module.exports = { Friend, User, FriendReq, Game, UserGame };
+News.belongsTo(Game, {
+    foreignKey: "game_id"
+});
+
+Game.hasMany(News, {
+    foreignKey: "game_id"
+});
+
+module.exports = { Friend, User, FriendReq, Game, UserGame, News };

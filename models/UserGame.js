@@ -29,6 +29,13 @@ UserGame.init(
                 key: 'id'
             }
         },
+        playtime_2weeks: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+                isInt: true
+            }
+        },
         playtime_forever: {
             type: DataTypes.INTEGER,
             allowNull: false,

@@ -4,7 +4,7 @@ require('dotenv').config();
 const request = require('request');
 var rp = require('request-promise');
 const { parse } = require("handlebars");
-const { getFriendsAndFriendRequests, authorizeUser, getAllOwnedGamesForUser } = require('../utils/middleware');
+const { getFriendsAndFriendRequests, authorizeUser, getAllOwnedGamesForUser, getUserStatsForGame } = require('../utils/middleware');
 const { json } = require("express");
 let goodData = true;
 let Data;
@@ -86,7 +86,7 @@ router.post('/ownedGameStats', async (req, res) => {
     }
 });
 
-router.get('/ownedGameStats/:appid', authorizeUser, getFriendsAndFriendRequests, getAllOwnedGamesForUser, async (req, res) => {
+router.get('/ownedGameStats/:appid', authorizeUser, getFriendsAndFriendRequests, getAllOwnedGamesForUser, getUserStatsForGame, async (req, res) => {
     const userData = await User.findByPk(req.session.user)
     // req.session.appid = req.body.appId
     // console.log(req.session.appid)

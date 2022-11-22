@@ -24,6 +24,9 @@ Game.init(
             type: DataTypes.STRING,
             allowNull: false
         },
+        news_updated_at: {
+            type: DataTypes.DATE
+        }
     },
     {
         sequelize,

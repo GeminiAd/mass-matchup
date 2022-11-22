@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const { User, Friend, FriendReq, Game, UserGame } = require("../models");
+const { User, Friend, FriendReq, Game, UserGame, News } = require("../models");
+const { Op } = require("sequelize");
 
 var moment = require('moment'); // require
 moment().format();
@@ -12,7 +13,8 @@ const {
     fetchAndReturnSteamUserData, 
     updateUserDataByUserID, 
     getAndSortAllOwnedGamesByUserID, 
-    fetchAndUpdateOwnedGames
+    fetchAndUpdateOwnedGames,
+    fetchAndUpdateSteamGameNews
 } = require('./utils');
 
 function authorizeUser(req, res, next) {
@@ -78,6 +80,31 @@ async function getAllOwnedGamesForUser(req, res, next) {
     })
 }
 
+async function getAllRecentGameNews(req, res, next) {
+    const newsList = await Promise.all(res.locals.recentGames.map(async (game) => {
+        const rawGameNews = await Game.findByPk(game.id, {
+            include: [
+                {
+                    model: News,
+                    seperate: true,
+                    limit: 3
+                }
+            ],
+        });
+
+        const gameNews = rawGameNews.get({ plain: true });
+
+        return {
+            name: game.name, 
+            news: gameNews.news
+        }
+    }));
+
+    res.locals.newsPerGame = newsList;
+
+    next();
+}
+
 async function getFriendData(req, res, next) {
     //console.log(req.params.id);
     const rawFriendData = await User.findByPk(req.params.id);
@@ -85,6 +112,8 @@ async function getFriendData(req, res, next) {
     const friendData = rawFriendData.get({ plain: true });
 
     res.locals.friendData = friendData;
+
+    //console.log(res.locals.friendData);
 
     next();
 }
@@ -182,6 +211,54 @@ function getOwnedSteamGamesForUser(req, res, next) {
     });
 }
 
+/*
+ *  Gets the recently played games for the user, and stores it in a local variable to be used later. Sorts by playtime_2weeks
+ *  in descending order.
+ */
+function getRecentGames(req, res, next) {
+    User.findByPk(req.session.userId, {
+        include: [
+            {
+                model: Game,
+                through: {
+                    where: {
+                        playtime_2weeks: {
+                            [Op.gt]: 0
+                        }
+                    }
+                },
+                include: [
+                    {
+                        model: News
+                    }
+                ]
+            }
+        ]
+    })
+    .then((user) => {
+        const ownedRecentGames = user.games.map(game => game.get({ plain: true }));
+
+        const sortedRecentGames = ownedRecentGames.sort(function (a, b) {
+            return parseFloat(b.user_game.playtime_2weeks) - parseFloat(a.user_game.playtime_2weeks);
+        });
+
+        //console.log(sortedRecentGames);
+
+        res.locals.recentGames = sortedRecentGames;
+
+        next();
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}
+
+function getUserStatsForGame(req, res, next) {
+    console.log(`GETTING USER STATS FOR GAME ${req.params.appid}`);
+
+    next();
+}
+
 /* Fetches information about the user with the Steam ID of the user and stores it in res.locals.playerData. */
 async function getSteamUserData(req, res, next) {
     fetchAndReturnSteamUserData(res.locals.dbUserData.steam_id)
@@ -224,8 +301,8 @@ async function updateFriendDataIfNecessary(req, res, next) {
     const updatedAtMoment = moment(res.locals.friendData.updated_at);
     const currentTime = moment();
     const differenceInMinutes = currentTime.diff(updatedAtMoment, 'minutes');
-    // console.log("UPDATING FRIEND DATA IF NECESSARY");
-    // console.log(differenceInMinutes);
+    console.log(`UPDATING ${res.locals.friendData.username}'s STEAM USER DATA IF NECESSARY`);
+    console.log(`${differenceInMinutes} minutes since last update`);
 
     if (differenceInMinutes > 10) {
         const friendSteamData = await fetchAndReturnSteamUserData(res.locals.friendData.steam_id);
@@ -255,6 +332,34 @@ function updateFriendOwnedGamesIfNecessary(req, res, next) {
     } else {
         next();
     }
+}
+
+async function updateRecentGamesNews(req, res, next) {
+    //console.log(res.locals.recentGames);
+
+    const gameNewsToUpdate = res.locals.recentGames.filter((game) => {
+        if (!game.news_updated_at) {
+            console.log(`Game news for ${game.name} has never been updated!`);
+            return true;
+        } else {
+            const updatedAtMoment = moment(game.news_updated_at);
+            const currentTime = moment();
+            const differenceInMinutes = currentTime.diff(updatedAtMoment, 'minutes');
+            console.log(`${differenceInMinutes} MINUTES SINCE NEWS FOR ${game.name} WAS LAST UPDATED`);
+
+            if (differenceInMinutes > 120) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    });
+
+    for (const game of gameNewsToUpdate) {
+        await fetchAndUpdateSteamGameNews(game);
+    }
+
+    next();
 }
 
 async function updateOwnedSteamGamesForUser(req, res, next) {
@@ -298,5 +403,9 @@ module.exports = {
     getFriendOwnedGames,
     updateFriendDataIfNecessary,
     updateFriendOwnedGamesIfNecessary,
-    getSharedGames
+    getSharedGames,
+    getUserStatsForGame,
+    getRecentGames,
+    updateRecentGamesNews,
+    getAllRecentGameNews
 };
