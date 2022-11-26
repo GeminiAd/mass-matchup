@@ -1,6 +1,7 @@
 const { UserGame } = require('../models');
 
 const userGameData = [
+    /*
     {
         user_id: 3,
         game_id: 1,
@@ -41,6 +42,7 @@ const userGameData = [
         playtime_linux_forever: 0,
         rtime_last_played: 1568108475
     }
+    */
 ];
 
 const seedUserGames = () => UserGame.bulkCreate(userGameData);

@@ -6,7 +6,7 @@ class User extends Model {
   checkPassword(givenpass) {
     return bcrypt.compareSync(givenpass, this.password);
   }
-} 
+}
 
 User.init(
   {
@@ -57,7 +57,7 @@ User.init(
   {
     hooks: {
       async beforeCreate(newUserData) {
-        newUserData.owned_games_updated_at = new Date();
+        //newUserData.owned_games_updated_at = new Date();
         newUserData.password = await bcrypt.hash(newUserData.password, 10);
 
         return newUserData;
@@ -67,7 +67,7 @@ User.init(
           const { password } = user;
           user.password = await bcrypt.hash(password, 10);
 
-          user.owned_games_updated_at = new Date();
+          //user.owned_games_updated_at = new Date();
         }
       },
     },

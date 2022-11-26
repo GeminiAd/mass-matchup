@@ -48,28 +48,31 @@ body {
     border: 1px solid var(--neon-yellow);
 }
 
-/*Login animation*/ 
+/*Login animation*/
 @keyframes flicker {
     from {
-      text-shadow:
-      0 0 5px #00dcff,0 0 10px #00dcff,
-      0 0 20px #00dcff, 0 0 40px #00dcff;
+        text-shadow:
+            0 0 5px #00dcff, 0 0 10px #00dcff,
+            0 0 20px #00dcff, 0 0 40px #00dcff;
     }
+
     to {
-      text-shadow:
-      0 0 5px #09889c, 0 0 10px #09889c,
-      0 0 20px #09889c, 0 0 40px #09889c;
+        text-shadow:
+            0 0 5px #09889c, 0 0 10px #09889c,
+            0 0 20px #09889c, 0 0 40px #09889c;
     }
-  }
-  .login { animation: flicker 1s ease-in-out infinite alternate; 
+}
+
+.login {
+    animation: flicker 1s ease-in-out infinite alternate;
 }
 
 /*login form*/
 .login,
-.login-text { 
+.login-text {
     text-shadow:
-  0 0 5px #0161E8, 0 0 10px #0161E8,
-  0 0 20px #0161E8, 0 0 40px #0161E8;
+        0 0 5px #0161E8, 0 0 10px #0161E8,
+        0 0 20px #0161E8, 0 0 40px #0161E8;
     color: white;
 }
 
@@ -81,7 +84,7 @@ body {
 }
 
 /*sign up page*/
-.steam-title{
+.steam-title {
     font-family: 'Press Start 2P';
     text-decoration: none;
     color: white;
@@ -89,43 +92,44 @@ body {
 }
 
 .steam-title:hover {
-    color:#F7E745;
+    color: #F7E745;
 }
 
 .fool {
     font-family: 'Press Start 2P';
     color: white;
     text-shadow:
-    0 0 5px #aa00ff, 0 0 10px #aa00ff;
+        0 0 5px #aa00ff, 0 0 10px #aa00ff;
 }
+
 /*overflow-y: scroll; */
 /*dashboard styling*/
 
 
 .dash-title {
     text-shadow:
-    0 0 5px #aa00ff, 0 0 10px #aa00ff,
-    0 0 20px #aa00ff, 0 0 40px #aa00ff;
-      color: rgb(254, 252, 255);
+        0 0 5px #aa00ff, 0 0 10px #aa00ff,
+        0 0 20px #aa00ff, 0 0 40px #aa00ff;
+    color: rgb(254, 252, 255);
     font-family: 'Press Start 2P'
 }
 
 .yellow-glow-title {
-    color:#ffffff;
+    color: #ffffff;
     text-shadow:
-    0 0 5px var(--neon-yellow), 0 0 10px var(--neon-yellow);
+        0 0 5px var(--neon-yellow), 0 0 10px var(--neon-yellow);
     font-family: 'Press Start 2P';
 }
 
 .red-glow-title {
-    color:#ffffff;
+    color: #ffffff;
     text-shadow:
-    0 0 5px var(--neon-red), 0 0 10px var(--neon-red);
+        0 0 5px var(--neon-red), 0 0 10px var(--neon-red);
     font-family: 'Press Start 2P';
 }
 
 .card-text {
-    color:white;
+    color: white;
 }
 
 .card-title,
@@ -138,9 +142,10 @@ body {
 /*nav bar*/
 .dash-line {
     font-size: 12px;
-    color: #00dcff;;
+    color: #00dcff;
+    ;
     text-shadow:
-    0 0 20px #aa00ff, 0 0 40px #aa00ff;
+        0 0 20px #aa00ff, 0 0 40px #aa00ff;
 }
 
 .nav-class:hover {
@@ -155,14 +160,14 @@ body {
 
 /*game news*/
 a[href^="https"] {
-    --bs-link-color:#aa00ff;
+    --bs-link-color: #aa00ff;
     text-decoration: none;
 }
 
 a[href^="https"]:hover {
     text-shadow:
-    0 0 5px #aa00ff, 0 0 10px #aa00ff;
-    --bs-link-hover-color:white;
+        0 0 5px #aa00ff, 0 0 10px #aa00ff;
+    --bs-link-hover-color: white;
 }
 
 .neon-yellow-link {
@@ -172,8 +177,8 @@ a[href^="https"]:hover {
 
 .neon-yellow-link:hover {
     text-shadow:
-    0 0 5px var(--neon-yellow), 0 0 10px var(--neon-yellow) !important;
-    --bs-link-hover-color:white;
+        0 0 5px var(--neon-yellow), 0 0 10px var(--neon-yellow) !important;
+    --bs-link-hover-color: white;
 }
 
 .neon-blue-link {
@@ -183,14 +188,14 @@ a[href^="https"]:hover {
 
 .neon-blue-link:hover {
     text-shadow:
-    0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue) !important;
-    --bs-link-hover-color:white;
+        0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue) !important;
+    --bs-link-hover-color: white;
 }
 
 .neon-blue-link:hover {
     text-shadow:
-    0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
-    --bs-link-hover-color:white;
+        0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+    --bs-link-hover-color: white;
 }
 
 .neon-red-link {
@@ -200,8 +205,8 @@ a[href^="https"]:hover {
 
 .neon-red-link:hover {
     text-shadow:
-    0 0 5px var(--neon-red), 0 0 10px var(--neon-red) !important;
-    --bs-link-hover-color:white;
+        0 0 5px var(--neon-red), 0 0 10px var(--neon-red) !important;
+    --bs-link-hover-color: white;
 }
 
 .user-search-image {
@@ -211,36 +216,36 @@ a[href^="https"]:hover {
 
 .news-title {
     text-shadow:
-    0 0 5px #580084, 0 0 10px #580084,
-    0 0 20px #580084, 0 0 40px #580084;
+        0 0 5px #580084, 0 0 10px #580084,
+        0 0 20px #580084, 0 0 40px #580084;
     color: #ffffff;
     font-size: 15px;
-    
+
 }
 
 .card-title {
     text-shadow:
-    0 0 5px #00dcff, 0 0 10px #00dcff;
+        0 0 5px #00dcff, 0 0 10px #00dcff;
 }
 
 /*recently played*/
 
 .hours {
-    color:#F7E745;
+    color: #F7E745;
     text-shadow:
-    0 0 5px #ab04ff, 0 0 15px #ab04ff;
+        0 0 5px #ab04ff, 0 0 15px #ab04ff;
 }
 
 .violet-glow-btn {
     position: relative;
     color: #ab04ff;
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     transition: 0.2s;
     overflow: hidden;
     border: 1px solid #ab04ff;
     z-index: 500;
 }
-  
+
 .violet-glow-btn:hover {
     background: #ab04ff;
     color: white;
@@ -250,7 +255,7 @@ a[href^="https"]:hover {
 .violet-glow-btn:active:focus {
     position: relative;
     color: #ab04ff;
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     transition: 0.2s;
     overflow: hidden;
     border: 1px solid #ab04ff;
@@ -288,7 +293,7 @@ a[href^="https"]:hover {
 .profile-button[aria-expanded="false"] {
     position: relative;
     color: #04d9ff;
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     transition: 0.2s;
     overflow: hidden;
     border: solid 1px #04d9ff;
@@ -331,7 +336,7 @@ a[href^="https"]:hover {
     overflow: hidden;
     border: 1px solid #FF3131;
 }
-  
+
 .red-glow-btn:hover {
     background: #FF3131;
     color: white;
@@ -362,7 +367,8 @@ a[href^="https"]:hover {
     border: 1px solid #FF3131;
 }
 
-.green-glow-btn, .green-glow-btn:active:focus {
+.green-glow-btn,
+.green-glow-btn:active:focus {
     position: relative;
     color: #0FFF50;
     background-color: black;
@@ -370,8 +376,10 @@ a[href^="https"]:hover {
     overflow: hidden;
     border: solid 1px #0FFF50;
 }
-  
-.green-glow-btn:hover, .green-glow-btn:active:hover, .green-glow-btn:active:focus:hover {
+
+.green-glow-btn:hover,
+.green-glow-btn:active:hover,
+.green-glow-btn:active:focus:hover {
     background: #0FFF50;
     color: #050801;
     box-shadow: 0 0 5px #0FFF50, 0 0 25px #0FFF50, 0 0 50px #0FFF50, 0 0 200px #0FFF50;
@@ -386,7 +394,7 @@ a[href^="https"]:hover {
     overflow: hidden;
     border: solid 1px #04d9ff;
 }
-  
+
 .blue-glow-btn:hover {
     background: #04d9ff;
     color: #050801;
@@ -420,7 +428,7 @@ a[href^="https"]:hover {
 .transparent-blue-glow-btn {
     position: relative;
     color: #04d9ff;
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     transition: 0.2s;
     overflow: hidden;
     border: solid 1px #04d9ff;
@@ -452,58 +460,66 @@ a[href^="https"]:hover {
 .transparent-blue-glow-btn:active:focus {
     position: relative;
     color: #04d9ff;
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     transition: 0.2s;
     overflow: hidden;
     border: solid 1px #04d9ff;
 }
 
 .transparent {
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
 }
 
-.transparent-green-glow-btn, .transparent-green-glow-btn:active:focus {
+.transparent-green-glow-btn,
+.transparent-green-glow-btn:active:focus {
     position: relative;
     color: var(--neon-green);
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     transition: 0.3s;
     overflow: hidden;
     border: solid 1px var(--neon-green);
 }
 
-.transparent-green-glow-btn:hover, .transparent-green-glow-btn:active:hover, .transparent-green-glow-btn:active:focus:hover {
+.transparent-green-glow-btn:hover,
+.transparent-green-glow-btn:active:hover,
+.transparent-green-glow-btn:active:focus:hover {
     background: var(--neon-green);
     color: black;
     box-shadow: 0 0 5px var(--neon-green), 0 0 25px var(--neon-green), 0 0 50px var(--neon-green), 0 0 200px var(--neon-green) !important;
     /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
 }
 
-.transparent-red-glow-btn, .transparent-red-glow-btn:active:focus {
+.transparent-red-glow-btn,
+.transparent-red-glow-btn:active:focus {
     position: relative;
     color: var(--neon-red);
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     transition: 0.3s;
     overflow: hidden;
     border: solid 1px var(--neon-red);
 }
 
-.transparent-red-glow-btn:hover, .transparent-red-glow-btn:active:hover, .transparent-red-glow-btn:active:focus:hover {
+.transparent-red-glow-btn:hover,
+.transparent-red-glow-btn:active:hover,
+.transparent-red-glow-btn:active:focus:hover {
     background: var(--neon-red);
     color: white;
     box-shadow: 0 0 5px var(--neon-red), 0 0 25px var(--neon-red), 0 0 50px var(--neon-red), 0 0 200px var(--neon-red) !important;
     /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
 }
 
-.yellow-glow-btn, .yellow-glow-btn:active:focus {
+.yellow-glow-btn,
+.yellow-glow-btn:active:focus {
     position: relative;
     color: #ccff15;
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     transition: 0.2s;
     overflow: hidden;
     border: solid 1px #ccff15;
 }
-  
-.yellow-glow-btn:hover, .yellow-glow-btn:active:focus:hover {
+
+.yellow-glow-btn:hover,
+.yellow-glow-btn:active:focus:hover {
     background: #ccff15;
     color: #050801;
     box-shadow: 0 0 5px #ccff15, 0 0 25px #ccff15, 0 0 50px #ccff15, 0 0 200px #ccff15 !important;
@@ -513,7 +529,7 @@ a[href^="https"]:hover {
 .yellow-glow-dropdown:focus {
     position: relative;
     color: #ccff15;
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     transition: 0.2s;
     overflow: hidden;
     border: solid 1px #ccff15;
@@ -525,11 +541,11 @@ a[href^="https"]:hover {
     color: #050801;
     box-shadow: 0 0 5px #ccff15, 0 0 25px #ccff15, 0 0 50px #ccff15, 0 0 200px #ccff15 !important;
 }
-  
+
 .yellow-glow-dropdown[aria-expanded="false"] {
     position: relative;
     color: #ccff15;
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     transition: 0.2s;
     overflow: hidden;
     border: solid 1px #ccff15;
@@ -571,18 +587,18 @@ a[href^="https"]:hover {
 }
 
 /*user section*/
-.user {    
-    color:#ffffff;
+.user {
+    color: #ffffff;
     text-shadow:
-    0 0 5px #00dcff, 0 0 10px #00dcff;
+        0 0 5px #00dcff, 0 0 10px #00dcff;
 }
 
-.btn-secondary{
+/* .btn-secondary{
     --bs-btn-bg: rgba(0, 0, 0, 0.125);
     --bs-btn-active-bg: rgba(0, 0, 0, 0.125);
 
     
-}
+} */
 
 .blue-dropdown-menu {
     /*
@@ -590,8 +606,8 @@ a[href^="https"]:hover {
     --bs-dropdown-bg: rgba(171, 4, 255, .75); 
     --bs-dropdown-link-hover-bg: rgba(171, 4, 255, .75); 
     */
-    background-color: rgba(0,0,0,.80);
-    color:white;
+    background-color: rgba(0, 0, 0, .80);
+    color: white;
 }
 
 .blue-dropdown-item {
@@ -610,8 +626,8 @@ a[href^="https"]:hover {
     --bs-dropdown-bg: rgba(171, 4, 255, .75); 
     --bs-dropdown-link-hover-bg: rgba(171, 4, 255, .75); 
     */
-    background-color: rgba(0,0,0,.70);
-    color:white;
+    background-color: rgba(0, 0, 0, .70);
+    color: white;
 }
 
 .yellow-dropdown-item {
@@ -652,14 +668,14 @@ a[href^="https"]:hover {
 .offcanvas-header {
     font-family: 'Press Start 2P';
     text-shadow:
-    0 0 5px #580084, 0 0 10px #580084,
-    0 0 20px #580084, 0 0 40px #580084;
+        0 0 5px #580084, 0 0 10px #580084,
+        0 0 20px #580084, 0 0 40px #580084;
     color: #ffffff;
     /* background-color: rgba(0,0,0,0); */
 }
 
 .offcanvas {
-    background-color: rgba(0,0,0,.80);
+    background-color: rgba(0, 0, 0, .80);
     /* opacity: .85; */
 }
 
@@ -668,7 +684,7 @@ a[href^="https"]:hover {
 }
 
 .friend-button {
-    background-color: rgba(0,0,0,.75);
+    background-color: rgba(0, 0, 0, .75);
 }
 
 .sidebar-button:hover {
@@ -679,15 +695,39 @@ a[href^="https"]:hover {
 
 .user-stat-list-group-item {
     color: #ccff15;
-    color:#ffffff;
+    color: #ffffff;
     text-shadow:
-    0 0 5px #ccff15, 0 0 10px #ccff15;
-    background-color: rgba(0,0,0,0);
+        0 0 5px #ccff15, 0 0 10px #ccff15;
+    background-color: rgba(0, 0, 0, 0);
     border: none;
 }
 
 #navbar {
     list-style-type: none;
+}
+
+#modal-close-icon {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
+
+.regular-link {
+    color: blue;
+    text-decoration: none;
+}
+
+.regular-link:hover {
+    color: blue;
+    text-shadow: none !important;
+}
+
+#logout-button {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
+
+#logout-button:hover {
+    cursor: pointer;
 }
 
 @media (max-width: 992px) {

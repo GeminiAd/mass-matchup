@@ -12,7 +12,23 @@ async function compareStatsButtonOnClick(event) {
     const friendID = parseInt(clickedButton.getAttribute('data-friend-id'));
 
     /* 2. Redirect to the compare stats page. */
-    document.location.replace(`/compare/${friendID}`);
+    fetch(`/api/games`, {
+        method: 'POST',
+        body: JSON.stringify({ id: friendID }),
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then((response) => {
+            if (response.ok) {
+                document.location.replace(`/compare/${friendID}`);
+            } else if (response.status === 403) {
+                alert("This user's game data is private");
+            } else {
+                alert("Unknown error occured");
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        })
 }
 
 /*
@@ -40,10 +56,8 @@ function ownedGameButtonOnClick(event) {
     /* 3. Get the friend ID of the friend whose stats we are viewing. */
     const friendID = parseInt(document.location.pathname.match(/\d+/g));
 
-    const gameName = button.querySelector("div > p").innerHTML;
-    
     /* 4. Redirect the user to the stats page. */
-    document.location.replace(`/friends/${friendID}/stats/${appid}?name=${gameName}`);
+    document.location.replace(`/friends/${friendID}/stats/${appid}`);
 }
 
 $('.ownedGameBtn').on('click', ownedGameButtonOnClick);

@@ -1,8 +1,10 @@
-<button class="btn violet-glow-btn btn-game d-flex flex-row justify-content-between align-items-center w-100 mb-1 p-0 recent-game-button" app-id="{{app_id}}">
+<button
+    class="btn violet-glow-btn btn-game d-flex flex-row justify-content-between align-items-center w-100 mb-1 p-0 recent-game-button"
+    app-id="{{app_id}}">
     <div class="d-flex align-items-center">
         <img src="https://avatars.akamai.steamstatic.com/{{img_icon_url}}.jpg"
             class="img-fluid steam-game-thumbnail rounded p-0 me-3" alt="...">
         <p class="card-text">{{name}} </p>
     </div>
-    <p class="card-text me-2">Recent: <span class="hours">{{to_hours user_game.playtime_2weeks}}</span> h</p>
+    <p class="card-text me-2"><span class="hours">{{to_hours user_game.playtime_2weeks}}</span> h</p>
 </button>
