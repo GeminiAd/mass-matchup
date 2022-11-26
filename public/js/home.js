@@ -1,4 +1,10 @@
-/* This file holds the logic for the friends sidebar buttons. */
+/* This file holds the logic for all elements common to the friends sidebar and the navbar. */
+
+const friendModal = $('#friendModal');
+
+function closeModal(event) {
+    friendModal.modal('hide');
+}
 
 /* 
  *  Logic for the friend request button on click.
@@ -126,6 +132,17 @@ async function friendRequestDenyButtonOnClick(event) {
     }
 }
 
+function logoutButtonOnClick(event) {
+    fetch(`/logout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then((response) => {
+            document.location.replace('/login');
+        })
+        .catch((error) => console.error(error));
+}
+
 /*
  *  Holds the logic button for the friend button on click. 
  *  On click, the friend button must:
@@ -139,7 +156,23 @@ function seeStatsButtonOnClick(event) {
     const friendID = parseInt(collapseElement.getAttribute('id').match(/\d+/g)[0]);
 
     /* 2. Redirect the user to the proper page using the ID. */
-    document.location.replace(`/friends/${friendID}/stats`);
+    fetch(`/api/games`, {
+        method: 'POST',
+        body: JSON.stringify({ id: friendID }),
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then((response) => {
+            if (response.ok) {
+                document.location.replace(`/friends/${friendID}/stats`);
+            } else if (response.status === 403) {
+                friendModal.modal('show');
+            } else {
+                alert("Unknown error occured");
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        })
 }
 
 /*
@@ -151,7 +184,7 @@ function seeStatsButtonOnClick(event) {
  */
 async function removeFriendButtonOnClick(event) {
     const buttonClicked = event.target;
-    
+
     /* 1.  Get the ID of the friend relationship we want to remove. */
     const friendID = parseInt(buttonClicked.closest('.collapse').getAttribute('data-friend-id'));
 
@@ -170,18 +203,28 @@ async function removeFriendButtonOnClick(event) {
 const compareStats = async (event) => {
     event.preventDefault();
     let clickedBtn = $(event.target)
-    const split = clickedBtn.parents().eq(1).attr("id").split("") 
-    const flip = split.reverse()
-    const finish = flip.join("") 
-    let goAgain = parseInt(finish)
-    const stringUp = goAgain.toString()
-    const splitAgain = stringUp.split("")
-    const flipAgain = splitAgain.reverse()
-    const onceMoreWithFeeling = flipAgain.join("")
-    const friend = parseInt(onceMoreWithFeeling) 
-    ///This must be flipped twice in the case that the target user-id is greater than 1 integer. Otherwise we get a crash.
-//    console.log(friend, "line 185 extracted value");
-    document.location.replace(`/compare/${friend}`);
+
+    const friendElementID = clickedBtn.parents().eq(1).attr("id");
+
+    const friendID = parseInt(friendElementID.match(/\d+/)[0]);
+
+    fetch(`/api/games`, {
+        method: 'POST',
+        body: JSON.stringify({ id: friendID }),
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then((response) => {
+            if (response.ok) {
+                document.location.replace(`/compare/${friendID}`);
+            } else if (response.status === 403) {
+                friendModal.modal('show');
+            } else {
+                alert("Unknown error occured");
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        })
 };
 
 
@@ -189,9 +232,13 @@ const compareStats = async (event) => {
 $(".compare-stats-button").on("click", compareStats)
 $(".see-stats-button").on('click', seeStatsButtonOnClick);;
 
-
 $('.friend-request-accept-button').on('click', friendRequestAcceptButtonOnClick);
 $('.friend-request-deny-button').on('click ', friendRequestDenyButtonOnClick);
 $('.remove-friend-button').on('click', removeFriendButtonOnClick);
+
+$('#logout-button').on('click', logoutButtonOnClick);
+
+$('#modal-close-button').on('click', closeModal);
+$('#modal-close-icon').on('click', closeModal);
 
 export { removeFriendButtonOnClick, seeStatsButtonOnClick, compareStats }

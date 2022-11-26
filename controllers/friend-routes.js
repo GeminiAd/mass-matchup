@@ -101,7 +101,7 @@ router.delete('/request/:id', authorizeUser, async (req, res) => {
     })
     .catch((error) => {
         console.log(error);
-        res.status.json(error);
+        res.status(500).json(error);
     });
 });
 

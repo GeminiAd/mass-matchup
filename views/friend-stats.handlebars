@@ -2,13 +2,28 @@
     <div class="row">
         <div class="col-12 col-sm-6 col-lg-5 col-xl-4 p-0">
             {{>friend-see-stats-card}}
-            {{>owned-games}}
+            {{>owned-games ownedGames=_locals.friendOwnedGames}}
         </div>
         <div class="col-12 col-sm-6 col-lg-7 col-xl-8 p-2">
             <div class="card shadow-lg container-fluid" id="stat-results-display-box">
+                {{#if private}}
+                <div class="card-header d-flex justify-content-center align-items-center">
+                    <h4 class="card-title dash-title m-0 my-2 lh-base mb-0">
+                        {{{_locals.friendData.steam_username}}}'s steam game data is private!
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p class="card-text mb-2">Have them navigate to their Steam <a
+                            href="https://help.steampowered.com/en/faqs/view/588C-C67D-0251-C276"
+                            target="_blank">profile privacy</a> page and make sure it looks like this:</p>
+                    <img src="/images/make-profile-public.png" class="figure-img img-fluid rounded modal-img"
+                        alt="Make profile public">
+                </div>
+                {{else}}
                 <div class="card-body row">
                     {{> (whichStatResultDisplay this)}}
                 </div>
+                {{/if}}
             </div>
         </div>
     </div>

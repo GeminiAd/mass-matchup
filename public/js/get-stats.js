@@ -11,10 +11,8 @@ const getOwnedGameStats = async (event) => {
     }
 
     const appId = button.getAttribute("ownedGameAppId");
-    
-    const gameName = button.querySelector("div > p").innerHTML;
 
-    document.location.replace(`/user-stats/ownedGameStats/${appId}?name=${gameName}`);
+    document.location.replace(`/user-stats/ownedGameStats/${appId}`);
 };
 
 $(".ownedGameBtn").on("click", getOwnedGameStats)

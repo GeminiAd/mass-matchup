@@ -1,9 +1,11 @@
 <div class="container mt-4">
     <div class="row d-flex justify-content-center">
-        {{!-- <div class="col-6 col-lg-6">
+        <div class="col-8 col-lg-6">
             <div class="card shadow-lg p-0">
-                <div class="card-header">
-                    <h2 class="card-title login">Instructions</h2>
+                <button class="btn transparent-blue-glow-btn position-absolute top-0 end-0 m-4" id="signup-button">Sign
+                    Up</button>
+                <div class="card-header mt-3">
+                    <h3 class="card-title login">Instructions</h3>
                 </div>
                 <div class="card-body pb-0">
                     <a class="h5 steam-title" data-bs-toggle="collapse" href="#steam-id-collapse" role="button"
@@ -51,63 +53,8 @@
                     </figure>
                 </div>
             </div>
-        </div> --}}
-        <div class="col-8 col-lg-6">
-            <div class="card shadow-lg p-0">
-                <button class="btn yellow-glow-btn position-absolute top-0 end-0 m-4"
-                    id="instructions-button">Instructions</button>
-                <div class="card-header">
-                    <h2 class="card-title login m-1 mt-3">Sign Up!</h2>
-                </div>
-                <div class="card-body pt-2">
-                    <form id="username-input-form" class="py-2 px-1">
-                        <label for="username-input" class="form-label card-text login-text">Username:</label>
-                        <input type="text" class="form-control shadow" id="username-input">
-                    </form>
-                    <form id="steam-id-input-form" class="py-2 px-1">
-                        <label for="steam-id-input-form" class="form-label card-text login-text">Steam ID:</label>
-                        <input type="text" class="form-control shadow" id="steam-id-input">
-                    </form>
-                    <form id="password-input-form" class="py-2 px-1">
-                        <label for="password-input" class="form-label card-text login-text">Password:</label>
-                        <input type="password" class="form-control shadow" id="password-input">
-                    </form>
-                    <form id="verify-password-input-form" class="py-2 px-1">
-                        <label for="verify-password-input" class="form-label card-text login-text">Verify
-                            password:</label>
-                        <input type="password" class="form-control shadow" id="verify-password-input">
-                    </form>
-                    <div class="container-fluid p-3 mt-1">
-                        <div class="row d-flex justify-content-between">
-                            <button href="/login/signup" class="btn transparent-blue-glow-btn shadow col-6"
-                                id="posting-signup-button">Sign Up</button>
-                            <button href="/login" class="btn violet-glow-btn shadow col-4 col-sm-4 col-xl-2"
-                                id="reroute-login-button">Login</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="signupModalLabel">Access DENIED!</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" id="modal-close-icon">
-                </button>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                    id="modal-close-button">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="/js/signup.js"></script>
+<script src="/js/signup-instructions.js"></script>
