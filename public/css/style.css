@@ -8,6 +8,7 @@
     --neon-green: #0FFF50;
     --neon-blue: #04d9ff;
     --neon-yellow: #ccff15;
+    --neon-purple: #ab04ff;
 }
 
 header {
@@ -24,6 +25,24 @@ body {
     background-position: top;
     background-attachment: fixed;
     min-height: 100vh;
+}
+
+body::-webkit-scrollbar {
+    width: 1em;
+}
+
+body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #50404D;
+}
+
+body::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 10px var(--neon-purple);
+    border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background-color: var(--neon-purple)
 }
 
 /*card transparency*/
@@ -728,6 +747,138 @@ a[href^="https"]:hover {
 
 #logout-button:hover {
     cursor: pointer;
+}
+
+.ownedGameBtn>div {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.recent-game-button>div {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.sharedGameBtn>div {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#stat-dropdown>ul {
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+#stat-dropdown>ul::-webkit-scrollbar {
+    width: 10px;
+}
+
+#stat-dropdown>ul::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+#stat-dropdown>ul::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 10px var(--neon-yellow);
+    border-radius: 5px;
+}
+
+#stat-dropdown>ul::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-yellow);
+}
+
+.user-owned-games-card {
+    max-height: 69vh;
+    overflow-y: scroll;
+}
+
+.user-owned-games-card::-webkit-scrollbar {
+    width: 15px;
+}
+
+.user-owned-games-card::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.user-owned-games-card::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 10px #ab04ff;
+    border-radius: 5px;
+}
+
+.user-owned-games-card::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-purple);
+    /* box-shadow: 0 0 5px var(--neon-purple), 0 0 25px var(--neon-purple), 0 0 50px var(--neon-purple), 0 0 200px var(--neon-purple) !important; */
+}
+
+.friend-owned-games-card {
+    max-height: 52.65vh;
+    overflow-y: scroll;
+}
+
+.friend-owned-games-card::-webkit-scrollbar {
+    width: 15px;
+}
+
+.friend-owned-games-card::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+}
+
+.friend-owned-games-card::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 10px #ab04ff;
+    border-radius: 5px;
+}
+
+.friend-owned-games-card::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-purple);
+}
+
+#stat-results-display-box {
+    max-height: 69vh;
+    overflow-y: scroll;
+}
+
+#stat-results-display-box::-webkit-scrollbar {
+    width: 15px;
+}
+
+#stat-results-display-box::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+}
+
+#stat-results-display-box::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 10px #ab04ff;
+    border-radius: 5px;
+}
+
+#stat-results-display-box::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-purple);
+}
+
+.news-card {
+    max-height: 69vh;
+    overflow-y: scroll;
+}
+
+.news-card::-webkit-scrollbar {
+    width: 15px;
+}
+
+.news-card::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+}
+
+.news-card::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 10px var(--neon-purple);
+    border-radius: 5px;
+}
+
+.news-card::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-purple);
 }
 
 @media (max-width: 992px) {

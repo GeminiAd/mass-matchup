@@ -26,7 +26,7 @@ function authorizeUser(req, res, next) {
 }
 
 async function checkPassword(req, res, next) {
-    console.log("CHECKING PASSWORD");
+    //console.log("CHECKING PASSWORD");
     try {
         const dbUserData = await User.findOne({
             where: {
@@ -259,15 +259,45 @@ function getSharedGames(req, res, next) {
         return game.app_id
     });
 
-    //console.log(friendsOwnedGameAppIDs);
+    const ownedGameAppIDs = res.locals.ownedGames.map((game) => {
+        return game.app_id
+    });
 
-    const sharedGames = res.locals.ownedGames.filter((game) => {
+    const sharedOwnedGames = res.locals.ownedGames.filter((game) => {
         return friendsOwnedGameAppIDs.includes(game.app_id);
     });
 
-    //console.log(sharedGames);
+    const sortedSharedOwnedGames = sharedOwnedGames.sort(function (a, b) {
+        return parseFloat(a.app_id) - parseFloat(b.app_id);
+    });
 
-    res.locals.sharedGames = sharedGames;
+    const friendSharedGames = res.locals.friendOwnedGames.filter((game) => {
+        return ownedGameAppIDs.includes(game.app_id);
+    });
+
+    const sortedFriendSharedGames = friendSharedGames.sort(function (a, b) {
+        return parseFloat(a.app_id) - parseFloat(b.app_id);
+    });
+
+    // console.log(sortedFriendSharedGames);
+
+    const sharedGames = sortedSharedOwnedGames;
+    for (let i = 0; i < sharedGames.length; i++) {
+        const userPlaytime = sortedSharedOwnedGames[i].user_game.playtime_forever;
+        // console.log(`YOU HAVE PLAYED ${sharedGames[i].name} ${userPlaytime} TOTAL MINUTES`);
+        const friendPlaytime = sortedFriendSharedGames[i].user_game.playtime_forever;
+        // console.log(`YOUR FRIEND HAS PLAYED ${sharedGames[i].name} ${friendPlaytime} TOTAL MINUTES`);
+        sharedGames[i].playtime_forever = userPlaytime + friendPlaytime;
+        // console.log(`YOU BOTH HAVE PLAYED ${sharedGames[i].name} ${sharedGames[i].playtime_forever} COMBINED TOTAL MINUTES`);
+    }
+
+    const sortedSharedGames = sharedGames.sort(function (a, b) {
+        return parseFloat(b.playtime_forever) - parseFloat(a.playtime_forever);
+    });
+
+    //console.log(sortedSharedGames);
+
+    res.locals.sharedGames = sortedSharedGames;
 
     next();
 }
