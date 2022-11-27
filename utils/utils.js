@@ -5,37 +5,11 @@ const rp = require('request-promise');
 const { User, Game, UserGame, News } = require("../models");
 const { Op } = require("sequelize");
 
-/* Checks to see if any user and owned game information needs updating, and if so, returns a list of users that need updating. */
-// async function checkToUpdateUserInformation() {
-//     return new Promise(async (resolve, reject) => {
-//         //console.log("checking if any user's owned games need updating");
-
-//         User.findAll()
-//         .then((rawUsers) => {
-//             const users = rawUsers.map(user => user.get({ plain: true }));
-
-//             const usersThatNeedUpdating = users.filter((user) => {
-//                 const updatedAtMoment = moment(user.updated_at);
-//                 const currentTime = moment();
-//                 const differenceInMinutes = currentTime.diff(updatedAtMoment, 'minutes');
-//                 console.log(differenceInMinutes);
-
-//                 return differenceInMinutes > 1440;
-//             })
-
-//             resolve(usersThatNeedUpdating);
-//         })
-//         .catch((error) => {
-//             console.log(error);
-//             reject(error);
-//         });
-//     });
-// }
 
 function fetchAndReturnSteamGameNews(appID) {
     return new Promise((resolve, reject) => {
         const fetchURL = `http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=${appID}&count=10&maxlength=300&format=json`;
-        console.log(fetchURL);
+        //console.log(fetchURL);
         rp(fetchURL)
             .then((response) => {
                 const rawGameNews = JSON.parse(response).appnews.newsitems;
@@ -54,7 +28,7 @@ function fetchAndReturnSteamGameNews(appID) {
 function fetchAndReturnSteamOwnedGameData(steamID) {
     return new Promise((resolve, reject) => {
         const fetchURL = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=' + process.env.APIkey + '&steamid=' + steamID + '&format=json&include_appinfo=true';
-        console.log(fetchURL);
+        //console.log(fetchURL);
         rp(fetchURL)
             .then((response) => {
                 const ownedGamesSteamData = JSON.parse(response).response.games;
@@ -73,7 +47,7 @@ function fetchAndReturnSteamOwnedGameData(steamID) {
 function fetchAndReturnSteamUserData(steamID) {
     return new Promise((resolve, reject) => {
         const fetchURL = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.APIkey}&steamids=${steamID}`;
-        console.log(fetchURL);
+        //console.log(fetchURL);
         rp(fetchURL)
             .then(async (body) => {
                 const playerData = JSON.parse(body).response.players[0];
@@ -129,7 +103,7 @@ function getAndSortAllOwnedGamesByUserID(userID) {
 
 async function fetchAndUpdateOwnedGames(user) {
     return new Promise(async (resolve, reject) => {
-        console.log(`UPDATING OWNED GAMES FOR ${user.username}`);
+        //console.log(`UPDATING OWNED GAMES FOR ${user.username}`);
         try {
             const steamGameData = await fetchAndReturnSteamOwnedGameData(user.steam_id)
             const rowsUpdated = await updateOwnedGamesByUserID(user.id, steamGameData)
@@ -140,28 +114,28 @@ async function fetchAndUpdateOwnedGames(user) {
     });
 }
 
-async function updateAllUserData(users) {
-    for (const user of users) {
-        console.log(`UPDATING USER DATA FOR ${user.username}`);
-        try {
-            const steamUserData = await fetchAndReturnSteamUserData(user.steam_id);
-            updateUserDataByUserID(user.id, steamUserData);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-}
+// async function updateAllUserData(users) {
+//     for (const user of users) {
+//         //console.log(`UPDATING USER DATA FOR ${user.username}`);
+//         try {
+//             const steamUserData = await fetchAndReturnSteamUserData(user.steam_id);
+//             updateUserDataByUserID(user.id, steamUserData);
+//         } catch (error) {
+//             console.log(error);
+//         }
+//     }
+// }
 
-async function updateAllOwnedGamesAndAllUsers() {
-    checkToUpdateUserInformation()
-        .then((users) => {
-            updateAllOwnedGames(users);
-            updateAllUserData(users);
-        })
-        .catch((error) => {
-            console.log(error);
-        })
-}
+// async function updateAllOwnedGamesAndAllUsers() {
+//     checkToUpdateUserInformation()
+//         .then((users) => {
+//             updateAllOwnedGames(users);
+//             updateAllUserData(users);
+//         })
+//         .catch((error) => {
+//             console.log(error);
+//         })
+// }
 
 /* 
  *  Updates the owned steam games information in the database for the user with the input ID using the raw response from the Steam Web API.
@@ -239,7 +213,7 @@ function updateOwnedGamesByUserID(userID, userOwnedGamesSteamData) {
                     /* If the steam user has no playtime in the last 2 weeks, there won't be a playtime_2weeks key in the STEAM response. */
                     if (game.playtime_2weeks) {
                         newUserGameObj.playtime_2weeks = game.playtime_2weeks;
-                        console.log(`YOU HAVE PLAYED ${game.name} FOR ${game.playtime_2weeks} MINUTES IN THE PAST 2 WEEKS`);
+                        // console.log(`YOU HAVE PLAYED ${game.name} FOR ${game.playtime_2weeks} MINUTES IN THE PAST 2 WEEKS`);
                     } else {
                         newUserGameObj.playtime_2weeks = 0;
                     }
@@ -265,7 +239,7 @@ function updateOwnedGamesByUserID(userID, userOwnedGamesSteamData) {
                     if (!game.playtime_2weeks) {
                         game.playtime_2weeks = 0;
                     } else {
-                        console.log(`YOU HAVE PLAYED ${game.name} FOR ${game.playtime_2weeks} MINUTES IN THE PAST 2 WEEKS`);
+                        // console.log(`YOU HAVE PLAYED ${game.name} FOR ${game.playtime_2weeks} MINUTES IN THE PAST 2 WEEKS`);
                     }
 
                     return game;
@@ -386,7 +360,6 @@ async function updateOwnedGamesUpdatedAt(userID) {
 
 
 module.exports = {
-    updateAllOwnedGamesAndAllUsers,
     fetchAndReturnSteamOwnedGameData,
     updateOwnedGamesByUserID,
     fetchAndReturnSteamUserData,
