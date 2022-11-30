@@ -461,10 +461,13 @@ a[href^="https"]:hover {
     border: 1px solid #FF3131;
 }
 
-.red-glow-btn:hover {
-    background: #FF3131;
-    color: white;
-    box-shadow: 0 0 5px #FF3131, 0 0 25px #FF3131, 0 0 50px #FF3131, 0 0 150px #FF3131;
+.red-glow-btn:hover,
+.red-glow-btn:active,
+.red-glow-btn:focus-visible {
+    background: #FF3131 !important;
+    color: white !important;
+    border: 1px solid #FF3131 !important;
+    box-shadow: 0 0 5px #FF3131, 0 0 25px #FF3131, 0 0 50px #FF3131, 0 0 150px #FF3131 !important;
     /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
 }
 
@@ -502,11 +505,14 @@ a[href^="https"]:hover {
 }
 
 .green-glow-btn:hover,
+.green-glow-btn:active,
+.green-glow-btn:focus-visible,
 .green-glow-btn:active:hover,
 .green-glow-btn:active:focus:hover {
-    background: #0FFF50;
-    color: #050801;
-    box-shadow: 0 0 5px #0FFF50, 0 0 25px #0FFF50, 0 0 50px #0FFF50, 0 0 200px #0FFF50;
+    background: #0FFF50 !important;
+    color: #050801 !important;
+    border: solid 1px #0FFF50 !important;
+    box-shadow: 0 0 5px #0FFF50, 0 0 25px #0FFF50, 0 0 50px #0FFF50, 0 0 200px #0FFF50 !important;
     /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
 }
 
@@ -519,10 +525,13 @@ a[href^="https"]:hover {
     border: solid 1px #04d9ff;
 }
 
-.blue-glow-btn:hover {
-    background: #04d9ff;
-    color: #050801;
-    box-shadow: 0 0 5px #04d9ff, 0 0 25px #04d9ff, 0 0 50px #04d9ff, 0 0 200px #04d9ff;
+.blue-glow-btn:hover,
+.blue-glow-btn:active,
+.blue-glow-btn:focus-visible {
+    background: #04d9ff !important;
+    color: #050801 !important;
+    border: solid 1px #04d9ff !important;
+    box-shadow: 0 0 5px #04d9ff, 0 0 25px #04d9ff, 0 0 50px #04d9ff, 0 0 200px #04d9ff !important;
     /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
 }
 
@@ -558,9 +567,12 @@ a[href^="https"]:hover {
     border: solid 1px #04d9ff;
 }
 
-.transparent-blue-glow-btn:hover {
-    background: #04d9ff;
-    color: black;
+.transparent-blue-glow-btn:hover,
+.transparent-blue-glow-btn:active,
+.transparent-blue-glow-btn:focus-visible {
+    background: #04d9ff !important;
+    color: black !important;
+    border: solid 1px #04d9ff !important;
     box-shadow: 0 0 5px #04d9ff, 0 0 25px #04d9ff, 0 0 50px #04d9ff, 0 0 200px #04d9ff !important;
     /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
 }
@@ -624,10 +636,13 @@ a[href^="https"]:hover {
 }
 
 .transparent-red-glow-btn:hover,
+.transparent-red-glow-btn:active,
+.transparent-red-glow-btn:focus-visible,
 .transparent-red-glow-btn:active:hover,
 .transparent-red-glow-btn:active:focus:hover {
-    background: var(--neon-red);
-    color: white;
+    background: var(--neon-red) !important;
+    color: white !important;
+    border: solid 1px var(--neon-red);
     box-shadow: 0 0 5px var(--neon-red), 0 0 25px var(--neon-red), 0 0 50px var(--neon-red), 0 0 200px var(--neon-red) !important;
     /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
 }
