@@ -391,9 +391,12 @@ a[href^="https"]:hover {
     position: relative;
 }
 
-.violet-glow-btn:hover {
-    background: #ab04ff;
-    color: white;
+.violet-glow-btn:hover,
+.violet-glow-btn:active,
+.violet-glow-btn:focus-visible {
+    background: #ab04ff !important;
+    border: 1px solid #ab04ff !important;
+    color: white !important;
     box-shadow: 0 0 5px #ab04ff, 0 0 25px #ab04ff, 0 0 50px #ab04ff, 0 0 200px #ab04ff !important;
 }
 
@@ -402,7 +405,6 @@ a[href^="https"]:hover {
     color: #ab04ff;
     background-color: rgba(0, 0, 0, 0);
     transition: 0.2s;
-    overflow: hidden;
     border: 1px solid #ab04ff;
 }
 
@@ -449,28 +451,6 @@ a[href^="https"]:hover {
     color: black;
     box-shadow: 0 0 5px #04d9ff, 0 0 25px #04d9ff, 0 0 50px #04d9ff, 0 0 200px #04d9ff !important;
 }
-
-/*
-.btn {
-    box-shadow:
-    0 0 5px #ab04ff, 0 0 10px #ab04ff;
-    --bs-btn-hover-bg: rgba(171, 4, 255, .75); 
-}
-
-.red-glow-btn {
-    color: #FF3131;
-    border: 1px solid #FF3131;
-    cursor: pointer;
-    font-weight: bold;
-    filter: drop-shadow(0 0 15px #FF3131) drop-shadow(0 0 50px #FF3131) contrast(2) brightness(2);
-    transition: .5s;
-} */
-
-/* .red-glow-btn:hover {
-    color: black;
-    background-color: #FF3131;
-    filter: drop-shadow(0 0 20px #FF3131) contrast(2) brightness(2);
-} */
 
 .red-glow-btn {
     position: relative;
@@ -663,9 +643,12 @@ a[href^="https"]:hover {
 }
 
 .yellow-glow-btn:hover,
+.yellow-glow-btn:active,
+.yellow-glow-btn:focus-visible,
 .yellow-glow-btn:active:focus:hover {
-    background: #ccff15;
-    color: #050801;
+    background: #ccff15 !important;
+    color: #050801 !important;
+    border: solid 1px #ccff15 !important;
     box-shadow: 0 0 5px #ccff15, 0 0 25px #ccff15, 0 0 50px #ccff15, 0 0 200px #ccff15 !important;
     /* -webkit-box-reflect: below 1px linear-gradient(transparent, #0005); */
 }
